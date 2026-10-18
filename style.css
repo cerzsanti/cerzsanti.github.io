@@ -1,29 +1,224 @@
 
-/* CERZ — Identidad visual inicial */
+
+/* ==================================
+   CERZ — SISTEMA VISUAL
+   ================================== */
+
+/* 01 — VARIABLES */
+
+:root {
+    --background: #171717;
+    --foreground: #f0eee9;
+    --secondary: #a5a5a5;
+    --line: #444444;
+    --surface: #292929;
+    --gutter: clamp(20px, 4vw, 64px);
+}
+
+/* 02 — REGLAS GENERALES */
+
+* {
+    box-sizing: border-box;
+}
 
 body {
-    background-color: #171717;
-    color: #f0eee9;
-    font-family: Arial, sans-serif;
     margin: 0;
-    padding: 8%;
+    background: var(--background);
+    color: var(--foreground);
+    font-family: Arial, Helvetica, sans-serif;
 }
 
-h1 {
-    font-size: 96px;
+.container {
+    width: 100%;
+    max-width: 1600px;
+    margin: 0 auto;
+    padding: 0 var(--gutter);
+}
+
+/* 03 — RETÍCULA PRINCIPAL */
+
+.site-header,
+.intro,
+.projects,
+.site-footer {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: 20px;
+}
+
+/* 04 — ENCABEZADO */
+
+.site-header {
+    align-items: center;
+    padding: 28px 0;
+    border-bottom: 1px solid var(--line);
+}
+
+.logo {
+    grid-column: 1 / 5;
+    font-size: 30px;
+    letter-spacing: -2px;
+}
+
+.header-label {
+    grid-column: 7 / 13;
+    text-align: right;
+    font-size: 11px;
+    letter-spacing: 2px;
+}
+
+/* 05 — PRESENTACIÓN */
+
+.intro {
+    padding: clamp(80px, 12vw, 180px) 0;
+    border-bottom: 1px solid var(--line);
+}
+
+.section-number {
+    grid-column: 1 / 13;
+    color: var(--secondary);
+    font-size: 11px;
+    letter-spacing: 2px;
+    margin-bottom: 40px;
+}
+
+.intro h1 {
+    grid-column: 1 / 11;
+    font-size: clamp(42px, 6vw, 100px);
     font-weight: 400;
-    letter-spacing: -6px;
-    margin-bottom: 10px;
+    letter-spacing: -0.05em;
+    line-height: 1.05;
+    margin: 0;
 }
 
-h2 {
-    font-size: 18px;
-    font-weight: 400;
-    letter-spacing: 5px;
-}
-
-p {
+.intro-text {
+    grid-column: 7 / 13;
+    margin-top: 45px;
+    color: var(--secondary);
     font-size: 16px;
-    line-height: 1.8;
-    max-width: 550px;
+    line-height: 1.7;
+}
+
+/* 06 — PROYECTOS */
+
+.projects {
+    padding: 60px 0;
+    row-gap: 20px;
+}
+
+.project-card {
+    grid-column: span 6;
+    min-height: 320px;
+    padding: 30px;
+    background: var(--surface);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.project-number {
+    color: var(--secondary);
+    font-size: 11px;
+    letter-spacing: 2px;
+}
+
+.project-card h2 {
+    font-size: clamp(28px, 3vw, 48px);
+    font-weight: 400;
+    margin: 0;
+}
+
+/* 07 — PIE DE PÁGINA */
+
+.site-footer {
+    border-top: 1px solid var(--line);
+    padding: 30px 0;
+    color: var(--secondary);
+    font-size: 12px;
+    grid-template-columns: 1fr;
+}
+
+/* ==================================
+   08 — TABLET
+   ================================== */
+
+@media (max-width: 900px) {
+
+    .site-header,
+    .intro,
+    .projects {
+        grid-template-columns: repeat(6, minmax(0, 1fr));
+        column-gap: 16px;
+    }
+
+    .logo {
+        grid-column: 1 / 3;
+    }
+
+    .header-label {
+        grid-column: 3 / 7;
+    }
+
+    .section-number {
+        grid-column: 1 / 7;
+    }
+
+    .intro h1 {
+        grid-column: 1 / 7;
+    }
+
+    .intro-text {
+        grid-column: 3 / 7;
+    }
+
+    .project-card {
+        grid-column: span 3;
+    }
+}
+
+/* ==================================
+   09 — CELULAR
+   ================================== */
+
+@media (max-width: 600px) {
+
+    .site-header,
+    .intro,
+    .projects {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        column-gap: 12px;
+    }
+
+    .logo {
+        grid-column: 1 / 3;
+        font-size: 26px;
+    }
+
+    .header-label {
+        grid-column: 3 / 5;
+        font-size: 9px;
+        letter-spacing: 1px;
+    }
+
+    .intro {
+        padding: 80px 0;
+    }
+
+    .section-number {
+        grid-column: 1 / 5;
+    }
+
+    .intro h1 {
+        grid-column: 1 / 5;
+    }
+
+    .intro-text {
+        grid-column: 1 / 5;
+        margin-top: 35px;
+    }
+
+    .project-card {
+        grid-column: 1 / 5;
+        min-height: 240px;
+    }
 }
