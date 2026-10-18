@@ -1,0 +1,29 @@
+
+/* CERZ — Identidad visual inicial */
+
+body {
+    background-color: #171717;
+    color: #f0eee9;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 8%;
+}
+
+h1 {
+    font-size: 96px;
+    font-weight: 400;
+    letter-spacing: -6px;
+    margin-bottom: 10px;
+}
+
+h2 {
+    font-size: 18px;
+    font-weight: 400;
+    letter-spacing: 5px;
+}
+
+p {
+    font-size: 16px;
+    line-height: 1.8;
+    max-width: 550px;
+}
