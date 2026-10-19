@@ -1,71 +1,69 @@
 
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#111111">
-    <title>CERZ — Arquitectura, Música y Producción</title>
+
+    <title>CERZ</title>
+
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
+
     <div class="page">
 
-        <!-- Intervención gráfica de fondo -->
-        <div class="red-field" aria-hidden="true"></div>
-        <div class="scanlines" aria-hidden="true"></div>
+        <header class="header"></header>
 
-        <!-- Encabezado sin texto -->
-        <header class="header" aria-label="Encabezado">
-        </header>
+        <main class="grid">
 
-        <main class="main">
+            <!-- CELDA 1,1: IDENTIDAD -->
 
-            <!-- Identidad CERZ -->
             <div class="identity">
+
                 <img
+                    src="logo-cerz.png"
+                    alt="Logo CERZ"
                     class="logo"
-                    src="logo-cerz-blanco.png"
-                    alt="Símbolo de CERZ"
                 >
 
-                <h1 class="wordmark" data-text="CERZ">
-                    CERZ
-                </h1>
+                <h1>CERZ</h1>
+
             </div>
 
-            <!-- Índice principal -->
+            <!-- CELDA 3,3: NAVEGACIÓN -->
+
             <nav class="navigation" aria-label="Navegación principal">
 
-                <a class="nav-item" href="arquitectura/">
-                    <span class="nav-number">01</span>
-                    <span class="nav-name">ARQUITECTURA</span>
-                    <span class="nav-arrow" aria-hidden="true">↗</span>
+                <a href="arquitectura/" class="nav-item">
+                    <span class="number">01</span>
+                    <span class="name">ARQUITECTURA</span>
+                    <span class="arrow" aria-hidden="true">↗</span>
                 </a>
 
-                <a class="nav-item" href="musica/">
-                    <span class="nav-number">02</span>
-                    <span class="nav-name">MÚSICA</span>
-                    <span class="nav-arrow" aria-hidden="true">↗</span>
+                <a href="musica/" class="nav-item">
+                    <span class="number">02</span>
+                    <span class="name">MÚSICA</span>
+                    <span class="arrow" aria-hidden="true">↗</span>
                 </a>
 
-                <a class="nav-item" href="contacto/">
-                    <span class="nav-number">03</span>
-                    <span class="nav-name">CONTACTO</span>
-                    <span class="nav-arrow" aria-hidden="true">↗</span>
+                <a href="contacto/" class="nav-item">
+                    <span class="number">03</span>
+                    <span class="name">CONTACTO</span>
+                    <span class="arrow" aria-hidden="true">↗</span>
                 </a>
 
             </nav>
 
         </main>
 
-        <!-- Pie de página -->
         <footer class="footer">
-            <span>© 2026</span>
+            © 2026
         </footer>
 
     </div>
+
 </body>
 </html>
-
