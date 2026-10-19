@@ -1,15 +1,15 @@
 
-/* ========================================
-   CERZ — PORTADA PRINCIPAL
-   ======================================== */
+/* ======================================
+   CERZ — INDEX
+   Retícula 3 × 3
+   ====================================== */
 
 /* 01 — VARIABLES */
 
 :root {
-    --background: #101010;
-    --foreground: #f4f0e9;
-    --red: #f33a1c;
-    --line: rgba(244, 240, 233, 0.45);
+    --background: #111111;
+    --foreground: #f0eee9;
+    --line: #666666;
     --margin: clamp(24px, 5vw, 76px);
 }
 
@@ -19,7 +19,8 @@
     box-sizing: border-box;
 }
 
-html {
+html,
+body {
     min-height: 100%;
 }
 
@@ -30,382 +31,209 @@ body {
     font-family: Arial, Helvetica, sans-serif;
 }
 
+/* 03 — ESTRUCTURA DE PÁGINA */
+
 .page {
-    position: relative;
-    isolation: isolate;
     min-height: 100vh;
     min-height: 100svh;
+
     display: grid;
-    grid-template-rows: auto 1fr auto;
-    overflow: hidden;
+    grid-template-rows: auto minmax(0, 1fr) auto;
 
-    padding: clamp(30px, 5vw, 74px) var(--margin) 28px;
-
-    background:
-        radial-gradient(
-            ellipse at 24% 48%,
-            #201c1b 0%,
-            #101010 55%,
-            #0c0c0c 100%
-        );
+    padding: 5vh var(--margin) 3vh;
 }
 
-/* 03 — INTERVENCIÓN ROJA */
-
-.red-field {
-    position: absolute;
-    z-index: -2;
-    pointer-events: none;
-
-    top: -10%;
-    bottom: -8%;
-    left: -13%;
-
-    width: min(52vw, 720px);
-
-    background:
-        linear-gradient(
-            0deg,
-            transparent 2%,
-            rgba(243,58,28,.95) 4%,
-            transparent 6% 20%,
-            rgba(243,58,28,.45) 21%,
-            transparent 23% 68%,
-            rgba(243,58,28,.95) 70%,
-            transparent 74%
-        ),
-        repeating-linear-gradient(
-            0deg,
-            transparent 0 15px,
-            rgba(0,0,0,.8) 16px 18px,
-            transparent 19px 29px
-        ),
-        linear-gradient(
-            90deg,
-            rgba(243,58,28,.98),
-            rgba(243,58,28,.50) 44%,
-            transparent 95%
-        );
-
-    clip-path: polygon(
-        0 0,
-        65% 0,
-        74% 14%,
-        45% 25%,
-        77% 36%,
-        60% 49%,
-        86% 56%,
-        51% 66%,
-        78% 78%,
-        46% 87%,
-        72% 100%,
-        0 100%
-    );
-
-    opacity: 0.83;
-}
-
-/* 04 — TRAMA DIGITAL */
-
-.scanlines {
-    position: absolute;
-    z-index: -1;
-    inset: 0;
-    pointer-events: none;
-
-    background: repeating-linear-gradient(
-        to bottom,
-        transparent 0 3px,
-        rgba(0,0,0,.12) 4px 5px
-    );
-
-    opacity: 0.55;
-}
-
-/* 05 — HEADER */
+/* 04 — HEADER */
 
 .header {
     border-top: 1px solid var(--line);
     min-height: 1px;
 }
 
-/* 06 — ORGANIZACIÓN PRINCIPAL */
+/* 05 — RETÍCULA PRINCIPAL */
 
-.main {
+.grid {
     display: grid;
-    grid-template-columns:
-        minmax(0, 1.5fr)
-        minmax(320px, 0.8fr);
 
-    column-gap: clamp(36px, 7vw, 130px);
-    align-items: center;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-rows: repeat(3, minmax(0, 1fr));
+
+    column-gap: 20px;
+    row-gap: 20px;
 
     min-height: 0;
-    padding: 65px 0 75px;
 }
 
-/* 07 — IDENTIDAD CERZ */
+/* 06 — IDENTIDAD: CELDA 1,1 */
 
 .identity {
-    display: flex;
-    align-items: center;
-    gap: clamp(10px, 1.5vw, 26px);
+    grid-column: 1;
+    grid-row: 1;
 
+    display: flex;
+    align-items: flex-start;
+
+    gap: 14px;
+
+    padding-top: 8vh;
     min-width: 0;
-    transform: translateY(-8%);
 }
 
 .logo {
     display: block;
-    width: clamp(112px, 17vw, 265px);
+
+    width: clamp(70px, 10vw, 160px);
     height: auto;
-    flex-shrink: 0;
+    object-fit: contain;
+
+    /* Convierte el logo negro en blanco */
+    filter: invert(1);
 }
 
-.wordmark {
-    position: relative;
-
+.identity h1 {
     margin: 0;
-    font-size: clamp(72px, 10.5vw, 170px);
+
+    font-size: clamp(64px, 7.5vw, 120px);
     font-weight: 400;
+
     letter-spacing: -0.075em;
-    line-height: 0.92;
+    line-height: 1;
+
     white-space: nowrap;
 }
 
-/* 08 — GLITCH SOBRE CERZ */
-
-.wordmark::after {
-    content: attr(data-text);
-
-    position: absolute;
-    inset: 0;
-
-    color: var(--red);
-    opacity: 0;
-    pointer-events: none;
-
-    clip-path: inset(43% 0 46% 0);
-}
-
-.identity:hover .wordmark::after {
-    animation: glitch 0.45s steps(2, end) 1;
-}
-
-@keyframes glitch {
-    0%, 100% {
-        opacity: 0;
-        transform: translateX(0);
-    }
-
-    20% {
-        opacity: 0.85;
-        transform: translateX(-7px);
-    }
-
-    45% {
-        opacity: 0.75;
-        transform: translateX(8px);
-    }
-
-    70% {
-        opacity: 0.9;
-        transform: translateX(-3px);
-    }
-}
-
-/* 09 — NAVEGACIÓN */
+/* 07 — NAVEGACIÓN: CELDA 3,3 */
 
 .navigation {
-    width: 100%;
-    max-width: 420px;
+    grid-column: 3;
+    grid-row: 3;
 
-    justify-self: end;
     align-self: end;
 
-    margin-bottom: clamp(5px, 5vh, 70px);
+    width: 100%;
+    margin-bottom: 4vh;
 }
 
 .nav-item {
     display: grid;
 
-    grid-template-columns:
-        52px
-        minmax(0, 1fr)
-        28px;
+    grid-template-columns: 42px minmax(0, 1fr) 24px;
 
-    gap: 18px;
+    gap: 12px;
     align-items: center;
 
-    min-height: 92px;
-    padding: 18px 2px;
+    min-height: 74px;
+    padding: 14px 0;
 
     border-top: 1px solid var(--line);
 
     color: var(--foreground);
     text-decoration: none;
-
-    transition:
-        color 0.2s ease,
-        padding-left 0.2s ease;
 }
 
-.nav-number {
-    font-size: 16px;
-    letter-spacing: 0.14em;
+.number {
+    font-size: 13px;
+    letter-spacing: 0.12em;
 }
 
-.nav-name {
-    padding-left: 34px;
+.name {
     border-left: 1px solid var(--line);
+    padding-left: 18px;
 
-    font-size: clamp(13px, 1.12vw, 17px);
-    letter-spacing: 0.24em;
+    font-size: 12px;
+    letter-spacing: 0.16em;
 }
 
-.nav-arrow {
-    font-size: 32px;
-    font-weight: 200;
-    line-height: 1;
+.arrow {
+    font-size: 25px;
     text-align: right;
-
-    transition: transform 0.2s ease;
+    line-height: 1;
 }
 
-/* Interacción con el menú */
+/* Interacción sin animación */
 
 .nav-item:hover,
 .nav-item:focus-visible {
-    color: var(--red);
-    padding-left: 8px;
-}
-
-.nav-item:hover .nav-arrow,
-.nav-item:focus-visible .nav-arrow {
-    transform: translate(4px, -4px);
+    color: #ffffff;
+    background: #252525;
 }
 
 .nav-item:focus-visible {
-    outline: 2px solid var(--red);
-    outline-offset: 5px;
+    outline: 2px solid var(--foreground);
+    outline-offset: 3px;
 }
 
-/* 10 — FOOTER */
+/* 08 — FOOTER */
 
 .footer {
     border-top: 1px solid var(--line);
 
-    padding-top: 17px;
+    padding-top: 16px;
 
     text-align: center;
     font-size: 11px;
-    letter-spacing: 0.35em;
+    letter-spacing: 0.3em;
 }
 
-/* ========================================
-   11 — TABLET
-   ======================================== */
+/* ======================================
+   09 — PANTALLAS INTERMEDIAS
+   ====================================== */
 
-@media (max-width: 900px) {
-
-    .main {
-        grid-template-columns: 1fr;
-        align-content: space-between;
-        gap: 90px;
-    }
+@media (max-width: 1100px) {
 
     .identity {
-        transform: none;
-    }
-
-    .logo {
-        width: clamp(92px, 22vw, 180px);
-    }
-
-    .wordmark {
-        font-size: clamp(65px, 14vw, 120px);
+        grid-column: 1 / 3;
     }
 
     .navigation {
-        width: min(100%, 430px);
-    }
-
-    .red-field {
-        width: 78vw;
+        grid-column: 2 / 4;
+        justify-self: end;
+        max-width: 420px;
     }
 }
 
-/* ========================================
-   12 — CELULAR
-   ======================================== */
+/* ======================================
+   10 — CELULARES
+   ====================================== */
 
-@media (max-width: 520px) {
+@media (max-width: 600px) {
 
     .page {
-        padding-top: 28px;
+        padding-top: 30px;
         padding-bottom: 20px;
     }
 
-    .main {
-        padding: 90px 0 60px;
-        gap: 95px;
+    .grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        grid-template-rows: repeat(3, minmax(0, 1fr));
+        gap: 10px;
     }
 
     .identity {
+        grid-column: 1 / 4;
+        grid-row: 1;
+
+        padding-top: 55px;
         gap: 10px;
     }
 
     .logo {
-        width: clamp(68px, 22vw, 105px);
+        width: clamp(60px, 19vw, 90px);
     }
 
-    .wordmark {
-        font-size: clamp(58px, 17vw, 86px);
+    .identity h1 {
+        font-size: clamp(56px, 17vw, 88px);
     }
 
     .navigation {
+        grid-column: 1 / 4;
+        grid-row: 3;
+
         max-width: none;
-        margin-bottom: 0;
+        margin-bottom: 25px;
     }
 
     .nav-item {
-        grid-template-columns:
-            38px
-            minmax(0, 1fr)
-            26px;
-
-        gap: 10px;
-        min-height: 80px;
-    }
-
-    .nav-number {
-        font-size: 13px;
-    }
-
-    .nav-name {
-        padding-left: 15px;
-        font-size: 12px;
-        letter-spacing: 0.16em;
-    }
-
-    .nav-arrow {
-        font-size: 26px;
-    }
-
-    .red-field {
-        width: 115vw;
-        opacity: 0.65;
-    }
-}
-
-/* 13 — ACCESIBILIDAD */
-
-@media (prefers-reduced-motion: reduce) {
-
-    *,
-    *::before,
-    *::after {
-        animation: none !important;
-        transition: none !important;
+        min-height: 70px;
     }
 }
