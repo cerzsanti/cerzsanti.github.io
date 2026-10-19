@@ -1,24 +1,26 @@
 
-
-/* ==================================
-   CERZ — SISTEMA VISUAL
-   ================================== */
+/* ========================================
+   CERZ — PORTADA PRINCIPAL
+   ======================================== */
 
 /* 01 — VARIABLES */
 
 :root {
-    --background: #171717;
-    --foreground: #f0eee9;
-    --secondary: #a5a5a5;
-    --line: #444444;
-    --surface: #292929;
-    --gutter: clamp(20px, 4vw, 64px);
+    --background: #101010;
+    --foreground: #f4f0e9;
+    --red: #f33a1c;
+    --line: rgba(244, 240, 233, 0.45);
+    --margin: clamp(24px, 5vw, 76px);
 }
 
-/* 02 — REGLAS GENERALES */
+/* 02 — CONFIGURACIÓN GENERAL */
 
 * {
     box-sizing: border-box;
+}
+
+html {
+    min-height: 100%;
 }
 
 body {
@@ -28,197 +30,382 @@ body {
     font-family: Arial, Helvetica, sans-serif;
 }
 
-.container {
-    width: 100%;
-    max-width: 1600px;
-    margin: 0 auto;
-    padding: 0 var(--gutter);
-}
-
-/* 03 — RETÍCULA PRINCIPAL */
-
-.site-header,
-.intro,
-.projects,
-.site-footer {
+.page {
+    position: relative;
+    isolation: isolate;
+    min-height: 100vh;
+    min-height: 100svh;
     display: grid;
-    grid-template-columns: repeat(12, minmax(0, 1fr));
-    column-gap: 20px;
+    grid-template-rows: auto 1fr auto;
+    overflow: hidden;
+
+    padding: clamp(30px, 5vw, 74px) var(--margin) 28px;
+
+    background:
+        radial-gradient(
+            ellipse at 24% 48%,
+            #201c1b 0%,
+            #101010 55%,
+            #0c0c0c 100%
+        );
 }
 
-/* 04 — ENCABEZADO */
+/* 03 — INTERVENCIÓN ROJA */
 
-.site-header {
+.red-field {
+    position: absolute;
+    z-index: -2;
+    pointer-events: none;
+
+    top: -10%;
+    bottom: -8%;
+    left: -13%;
+
+    width: min(52vw, 720px);
+
+    background:
+        linear-gradient(
+            0deg,
+            transparent 2%,
+            rgba(243,58,28,.95) 4%,
+            transparent 6% 20%,
+            rgba(243,58,28,.45) 21%,
+            transparent 23% 68%,
+            rgba(243,58,28,.95) 70%,
+            transparent 74%
+        ),
+        repeating-linear-gradient(
+            0deg,
+            transparent 0 15px,
+            rgba(0,0,0,.8) 16px 18px,
+            transparent 19px 29px
+        ),
+        linear-gradient(
+            90deg,
+            rgba(243,58,28,.98),
+            rgba(243,58,28,.50) 44%,
+            transparent 95%
+        );
+
+    clip-path: polygon(
+        0 0,
+        65% 0,
+        74% 14%,
+        45% 25%,
+        77% 36%,
+        60% 49%,
+        86% 56%,
+        51% 66%,
+        78% 78%,
+        46% 87%,
+        72% 100%,
+        0 100%
+    );
+
+    opacity: 0.83;
+}
+
+/* 04 — TRAMA DIGITAL */
+
+.scanlines {
+    position: absolute;
+    z-index: -1;
+    inset: 0;
+    pointer-events: none;
+
+    background: repeating-linear-gradient(
+        to bottom,
+        transparent 0 3px,
+        rgba(0,0,0,.12) 4px 5px
+    );
+
+    opacity: 0.55;
+}
+
+/* 05 — HEADER */
+
+.header {
+    border-top: 1px solid var(--line);
+    min-height: 1px;
+}
+
+/* 06 — ORGANIZACIÓN PRINCIPAL */
+
+.main {
+    display: grid;
+    grid-template-columns:
+        minmax(0, 1.5fr)
+        minmax(320px, 0.8fr);
+
+    column-gap: clamp(36px, 7vw, 130px);
     align-items: center;
-    padding: 28px 0;
-    border-bottom: 1px solid var(--line);
+
+    min-height: 0;
+    padding: 65px 0 75px;
+}
+
+/* 07 — IDENTIDAD CERZ */
+
+.identity {
+    display: flex;
+    align-items: center;
+    gap: clamp(10px, 1.5vw, 26px);
+
+    min-width: 0;
+    transform: translateY(-8%);
 }
 
 .logo {
-    grid-column: 1 / 5;
-    font-size: 30px;
-    letter-spacing: -2px;
+    display: block;
+    width: clamp(112px, 17vw, 265px);
+    height: auto;
+    flex-shrink: 0;
 }
 
-.header-label {
-    grid-column: 7 / 13;
-    text-align: right;
-    font-size: 11px;
-    letter-spacing: 2px;
-}
+.wordmark {
+    position: relative;
 
-/* 05 — PRESENTACIÓN */
-
-.intro {
-    padding: clamp(80px, 12vw, 180px) 0;
-    border-bottom: 1px solid var(--line);
-}
-
-.section-number {
-    grid-column: 1 / 13;
-    color: var(--secondary);
-    font-size: 11px;
-    letter-spacing: 2px;
-    margin-bottom: 40px;
-}
-
-.intro h1 {
-    grid-column: 1 / 11;
-    font-size: clamp(42px, 6vw, 100px);
-    font-weight: 400;
-    letter-spacing: -0.05em;
-    line-height: 1.05;
     margin: 0;
-}
-
-.intro-text {
-    grid-column: 7 / 13;
-    margin-top: 45px;
-    color: var(--secondary);
-    font-size: 16px;
-    line-height: 1.7;
-}
-
-/* 06 — PROYECTOS */
-
-.projects {
-    padding: 60px 0;
-    row-gap: 20px;
-}
-
-.project-card {
-    grid-column: span 6;
-    min-height: 320px;
-    padding: 30px;
-    background: var(--surface);
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-}
-
-.project-number {
-    color: var(--secondary);
-    font-size: 11px;
-    letter-spacing: 2px;
-}
-
-.project-card h2 {
-    font-size: clamp(28px, 3vw, 48px);
+    font-size: clamp(72px, 10.5vw, 170px);
     font-weight: 400;
-    margin: 0;
+    letter-spacing: -0.075em;
+    line-height: 0.92;
+    white-space: nowrap;
 }
 
-/* 07 — PIE DE PÁGINA */
+/* 08 — GLITCH SOBRE CERZ */
 
-.site-footer {
+.wordmark::after {
+    content: attr(data-text);
+
+    position: absolute;
+    inset: 0;
+
+    color: var(--red);
+    opacity: 0;
+    pointer-events: none;
+
+    clip-path: inset(43% 0 46% 0);
+}
+
+.identity:hover .wordmark::after {
+    animation: glitch 0.45s steps(2, end) 1;
+}
+
+@keyframes glitch {
+    0%, 100% {
+        opacity: 0;
+        transform: translateX(0);
+    }
+
+    20% {
+        opacity: 0.85;
+        transform: translateX(-7px);
+    }
+
+    45% {
+        opacity: 0.75;
+        transform: translateX(8px);
+    }
+
+    70% {
+        opacity: 0.9;
+        transform: translateX(-3px);
+    }
+}
+
+/* 09 — NAVEGACIÓN */
+
+.navigation {
+    width: 100%;
+    max-width: 420px;
+
+    justify-self: end;
+    align-self: end;
+
+    margin-bottom: clamp(5px, 5vh, 70px);
+}
+
+.nav-item {
+    display: grid;
+
+    grid-template-columns:
+        52px
+        minmax(0, 1fr)
+        28px;
+
+    gap: 18px;
+    align-items: center;
+
+    min-height: 92px;
+    padding: 18px 2px;
+
     border-top: 1px solid var(--line);
-    padding: 30px 0;
-    color: var(--secondary);
-    font-size: 12px;
-    grid-template-columns: 1fr;
+
+    color: var(--foreground);
+    text-decoration: none;
+
+    transition:
+        color 0.2s ease,
+        padding-left 0.2s ease;
 }
 
-/* ==================================
-   08 — TABLET
-   ================================== */
+.nav-number {
+    font-size: 16px;
+    letter-spacing: 0.14em;
+}
+
+.nav-name {
+    padding-left: 34px;
+    border-left: 1px solid var(--line);
+
+    font-size: clamp(13px, 1.12vw, 17px);
+    letter-spacing: 0.24em;
+}
+
+.nav-arrow {
+    font-size: 32px;
+    font-weight: 200;
+    line-height: 1;
+    text-align: right;
+
+    transition: transform 0.2s ease;
+}
+
+/* Interacción con el menú */
+
+.nav-item:hover,
+.nav-item:focus-visible {
+    color: var(--red);
+    padding-left: 8px;
+}
+
+.nav-item:hover .nav-arrow,
+.nav-item:focus-visible .nav-arrow {
+    transform: translate(4px, -4px);
+}
+
+.nav-item:focus-visible {
+    outline: 2px solid var(--red);
+    outline-offset: 5px;
+}
+
+/* 10 — FOOTER */
+
+.footer {
+    border-top: 1px solid var(--line);
+
+    padding-top: 17px;
+
+    text-align: center;
+    font-size: 11px;
+    letter-spacing: 0.35em;
+}
+
+/* ========================================
+   11 — TABLET
+   ======================================== */
 
 @media (max-width: 900px) {
 
-    .site-header,
-    .intro,
-    .projects {
-        grid-template-columns: repeat(6, minmax(0, 1fr));
-        column-gap: 16px;
+    .main {
+        grid-template-columns: 1fr;
+        align-content: space-between;
+        gap: 90px;
+    }
+
+    .identity {
+        transform: none;
     }
 
     .logo {
-        grid-column: 1 / 3;
+        width: clamp(92px, 22vw, 180px);
     }
 
-    .header-label {
-        grid-column: 3 / 7;
+    .wordmark {
+        font-size: clamp(65px, 14vw, 120px);
     }
 
-    .section-number {
-        grid-column: 1 / 7;
+    .navigation {
+        width: min(100%, 430px);
     }
 
-    .intro h1 {
-        grid-column: 1 / 7;
-    }
-
-    .intro-text {
-        grid-column: 3 / 7;
-    }
-
-    .project-card {
-        grid-column: span 3;
+    .red-field {
+        width: 78vw;
     }
 }
 
-/* ==================================
-   09 — CELULAR
-   ================================== */
+/* ========================================
+   12 — CELULAR
+   ======================================== */
 
-@media (max-width: 600px) {
+@media (max-width: 520px) {
 
-    .site-header,
-    .intro,
-    .projects {
-        grid-template-columns: repeat(4, minmax(0, 1fr));
-        column-gap: 12px;
+    .page {
+        padding-top: 28px;
+        padding-bottom: 20px;
+    }
+
+    .main {
+        padding: 90px 0 60px;
+        gap: 95px;
+    }
+
+    .identity {
+        gap: 10px;
     }
 
     .logo {
-        grid-column: 1 / 3;
+        width: clamp(68px, 22vw, 105px);
+    }
+
+    .wordmark {
+        font-size: clamp(58px, 17vw, 86px);
+    }
+
+    .navigation {
+        max-width: none;
+        margin-bottom: 0;
+    }
+
+    .nav-item {
+        grid-template-columns:
+            38px
+            minmax(0, 1fr)
+            26px;
+
+        gap: 10px;
+        min-height: 80px;
+    }
+
+    .nav-number {
+        font-size: 13px;
+    }
+
+    .nav-name {
+        padding-left: 15px;
+        font-size: 12px;
+        letter-spacing: 0.16em;
+    }
+
+    .nav-arrow {
         font-size: 26px;
     }
 
-    .header-label {
-        grid-column: 3 / 5;
-        font-size: 9px;
-        letter-spacing: 1px;
+    .red-field {
+        width: 115vw;
+        opacity: 0.65;
     }
+}
 
-    .intro {
-        padding: 80px 0;
-    }
+/* 13 — ACCESIBILIDAD */
 
-    .section-number {
-        grid-column: 1 / 5;
-    }
+@media (prefers-reduced-motion: reduce) {
 
-    .intro h1 {
-        grid-column: 1 / 5;
-    }
-
-    .intro-text {
-        grid-column: 1 / 5;
-        margin-top: 35px;
-    }
-
-    .project-card {
-        grid-column: 1 / 5;
-        min-height: 240px;
+    *,
+    *::before,
+    *::after {
+        animation: none !important;
+        transition: none !important;
     }
 }
