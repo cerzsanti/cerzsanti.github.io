@@ -1,65 +1,107 @@
 
-/* =====================================
+/* =========================================
    CERZ — INDEX
-   RETÍCULA 3 × 3
-   ===================================== */
+   SISTEMA VISUAL / RETÍCULA 3 × 3
+   ========================================= */
+
+/* 01 — VARIABLES */
 
 :root {
     --background: #111111;
-    --foreground: #f0eee9;
-    --line: #666666;
-    --margin: clamp(24px, 5vw, 76px);
+    --foreground: #f4f1eb;
+    --line: rgba(244, 241, 235, 0.55);
+
+    --margin: clamp(24px, 5vw, 80px);
+
+    /* Eje compartido: marca, logo y año */
+    --identity-axis: clamp(110px, 14vw, 215px);
 }
+
+/* 02 — CONFIGURACIÓN GENERAL */
 
 * {
     box-sizing: border-box;
 }
 
-html,
-body {
+html {
     min-height: 100%;
 }
 
 body {
     margin: 0;
+    min-height: 100%;
+
     background: var(--background);
     color: var(--foreground);
+
     font-family: Arial, Helvetica, sans-serif;
 }
 
-/* ESTRUCTURA GENERAL */
+/* 03 — ESTRUCTURA DE PÁGINA */
 
 .page {
+    display: grid;
+
+    grid-template-rows:
+        auto
+        minmax(0, 1fr)
+        auto;
+
     min-height: 100vh;
     min-height: 100svh;
 
-    display: grid;
-    grid-template-rows: auto minmax(0, 1fr) auto;
-
-    padding: 5vh var(--margin) 3vh;
+    padding:
+        clamp(28px, 5vh, 55px)
+        var(--margin)
+        clamp(20px, 4vh, 40px);
 }
 
-/* HEADER */
+/* 04 — HEADER */
 
 .header {
-    height: 1px;
-    border-top: 1px solid var(--line);
+    position: relative;
+
+    min-height: 54px;
+
+    border-bottom: 1px solid var(--line);
 }
 
-/* RETÍCULA PRINCIPAL */
+.header-brand {
+    position: absolute;
 
-.grid {
+    left: var(--identity-axis);
+    bottom: 14px;
+
+    transform: translateX(-50%);
+
+    color: var(--foreground);
+    text-decoration: none;
+
+    font-size: clamp(20px, 2vw, 30px);
+    font-weight: 500;
+
+    letter-spacing: 0.09em;
+    line-height: 1;
+}
+
+/* 05 — RETÍCULA PRINCIPAL */
+
+.main-grid {
     display: grid;
 
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    grid-template-rows: repeat(3, minmax(0, 1fr));
+    grid-template-columns:
+        repeat(3, minmax(0, 1fr));
 
-    gap: 20px;
+    grid-template-rows:
+        repeat(3, minmax(0, 1fr));
+
+    column-gap: 20px;
+    row-gap: 20px;
 
     min-height: 0;
 }
 
-/* IDENTIDAD — CELDA 1,1 */
+/* 06 — IDENTIDAD: CELDA 1,1 */
 
 .identity {
     grid-column: 1;
@@ -67,37 +109,28 @@ body {
 
     display: flex;
     align-items: flex-start;
+    justify-content: flex-start;
 
-    gap: 14px;
-    padding-top: 55px;
-
-    min-width: 0;
+    padding-top: clamp(55px, 8vh, 90px);
 }
 
 .logo {
     display: block;
 
-    width: clamp(75px, 10vw, 150px);
+    width: clamp(150px, 17vw, 260px);
     height: auto;
 
-    flex-shrink: 0;
+    margin-left: calc(
+        var(--identity-axis) - clamp(150px, 17vw, 260px) / 2
+    );
+
     object-fit: contain;
 
+    /* Imagen original negra → blanca */
     filter: invert(1);
 }
 
-.identity h1 {
-    margin: 0;
-
-    font-size: clamp(65px, 7.5vw, 115px);
-    font-weight: 400;
-    letter-spacing: -0.075em;
-    line-height: 1;
-
-    white-space: nowrap;
-}
-
-/* MENÚ — CELDA 3,3 */
+/* 07 — NAVEGACIÓN: CELDA 3,3 */
 
 .navigation {
     grid-column: 3;
@@ -107,19 +140,22 @@ body {
     justify-self: stretch;
 
     width: 100%;
-    margin-bottom: 30px;
+    margin-bottom: clamp(20px, 5vh, 65px);
 }
 
 .nav-item {
     display: grid;
 
-    grid-template-columns: 42px minmax(0, 1fr) 24px;
-    gap: 12px;
+    grid-template-columns:
+        46px
+        minmax(0, 1fr)
+        28px;
 
+    gap: 16px;
     align-items: center;
 
-    min-height: 75px;
-    padding: 14px 0;
+    min-height: 92px;
+    padding: 16px 0;
 
     border-top: 1px solid var(--line);
 
@@ -127,72 +163,154 @@ body {
     text-decoration: none;
 }
 
-.number {
-    font-size: 13px;
+.nav-number {
+    font-size: 15px;
     letter-spacing: 0.12em;
 }
 
-.name {
+.nav-name {
     border-left: 1px solid var(--line);
-    padding-left: 18px;
+    padding-left: 20px;
 
-    font-size: 12px;
+    font-size: clamp(11px, 1vw, 16px);
     letter-spacing: 0.16em;
+
+    white-space: nowrap;
 }
 
-.arrow {
-    font-size: 25px;
-    line-height: 1;
+.nav-arrow {
+    font-size: 30px;
+    font-weight: 300;
+
     text-align: right;
+    line-height: 1;
 }
+
+/* Estados de interacción */
 
 .nav-item:hover,
 .nav-item:focus-visible {
     background: #252525;
 }
 
-.nav-item:focus-visible {
+.nav-item:focus-visible,
+.header-brand:focus-visible {
     outline: 2px solid var(--foreground);
-    outline-offset: 3px;
+    outline-offset: 4px;
 }
 
-/* FOOTER */
+/* 08 — FOOTER */
 
 .footer {
+    position: relative;
+
+    min-height: 52px;
     border-top: 1px solid var(--line);
-
-    padding-top: 16px;
-
-    text-align: center;
-    font-size: 11px;
-    letter-spacing: 0.3em;
 }
 
-/* TABLET */
+.copyright {
+    position: absolute;
+
+    top: 17px;
+    left: var(--identity-axis);
+
+    transform: translateX(-50%);
+
+    font-size: 13px;
+    letter-spacing: 0.22em;
+
+    white-space: nowrap;
+}
+
+/* =========================================
+   09 — CURSOR PERSONALIZADO
+   ========================================= */
+
+.custom-cursor {
+    display: none;
+}
+
+@media (hover: hover) and (pointer: fine) {
+
+    body,
+    a {
+        cursor: none;
+    }
+
+    .custom-cursor {
+        display: block;
+
+        position: fixed;
+        top: 0;
+        left: 0;
+
+        width: 18px;
+        height: 18px;
+
+        background: #ffffff;
+        border: 1px solid #ffffff;
+        border-radius: 50%;
+
+        transform: translate(-50%, -50%);
+
+        pointer-events: none;
+        z-index: 9999;
+
+        opacity: 0;
+    }
+
+    .custom-cursor.is-hovering {
+        width: 32px;
+        height: 32px;
+
+        background: transparent;
+        border: 1px solid #ffffff;
+    }
+}
+
+/* =========================================
+   10 — TABLET
+   ========================================= */
 
 @media (max-width: 1100px) {
+
+    .navigation {
+        grid-column: 2 / 4;
+
+        width: min(100%, 430px);
+        justify-self: end;
+    }
 
     .identity {
         grid-column: 1 / 3;
     }
-
-    .navigation {
-        grid-column: 2 / 4;
-        max-width: 420px;
-        justify-self: end;
-    }
 }
 
-/* CELULAR */
+/* =========================================
+   11 — CELULAR
+   ========================================= */
 
 @media (max-width: 600px) {
 
+    :root {
+        --identity-axis: 75px;
+        --margin: 24px;
+    }
+
     .page {
-        padding-top: 30px;
+        padding-top: 24px;
         padding-bottom: 20px;
     }
 
-    .grid {
+    .header {
+        min-height: 48px;
+    }
+
+    .header-brand {
+        font-size: 20px;
+    }
+
+    .main-grid {
         gap: 10px;
     }
 
@@ -200,27 +318,70 @@ body {
         grid-column: 1 / 4;
         grid-row: 1;
 
-        padding-top: 45px;
-        gap: 10px;
+        padding-top: 55px;
     }
 
     .logo {
-        width: clamp(60px, 19vw, 90px);
-    }
-
-    .identity h1 {
-        font-size: clamp(56px, 17vw, 88px);
+        width: 125px;
+        margin-left: calc(
+            var(--identity-axis) - 62.5px
+        );
     }
 
     .navigation {
         grid-column: 1 / 4;
         grid-row: 3;
 
+        width: 100%;
         max-width: none;
+
         margin-bottom: 20px;
     }
 
     .nav-item {
-        min-height: 70px;
+        grid-template-columns:
+            34px
+            minmax(0, 1fr)
+            22px;
+
+        gap: 8px;
+        min-height: 75px;
+    }
+
+    .nav-number {
+        font-size: 12px;
+    }
+
+    .nav-name {
+        padding-left: 12px;
+        font-size: clamp(10px, 2.8vw, 12px);
+        letter-spacing: 0.08em;
+    }
+
+    .nav-arrow {
+        font-size: 24px;
+    }
+
+    .copyright {
+        font-size: 11px;
+    }
+}
+
+/* =========================================
+   12 — PANTALLAS BAJAS
+   ========================================= */
+
+@media (max-height: 650px) and (min-width: 601px) {
+
+    .page {
+        min-height: 650px;
+    }
+
+    .identity {
+        padding-top: 35px;
+    }
+
+    .navigation {
+        margin-bottom: 15px;
     }
 }
