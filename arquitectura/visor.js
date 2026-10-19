@@ -3,7 +3,7 @@
 // CERZ — VISOR PDF CON EFECTO DE HOJAS
 // ==========================================
 
-const PDF_PATH = "./publicacion.pdf";
+const PDF_PATH = "publicacion.pdf";
 
 const stage = document.getElementById("stage");
 const book = document.getElementById("book");
