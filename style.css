@@ -131,7 +131,7 @@ body {
         var(--identity-axis) - clamp(100px, 15vw, 230px) / 2
     );
 
-    filter: invert(1);
+    filter: invert(0);
 }
 /* 07 — NAVEGACIÓN: CELDA 3,3 */
 
