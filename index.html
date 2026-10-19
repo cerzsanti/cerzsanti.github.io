@@ -4,6 +4,7 @@
 
 <head>
     <meta charset="UTF-8">
+
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0">
 
@@ -11,74 +12,58 @@
 
     <title>CERZ — Arquitectura, Música y Producción</title>
 
-    <link rel="stylesheet" href="style.css">
-    <script src="cursor.js" defer></script>
+    <link rel="stylesheet" href="./style.css">
+    <script src="./cursor.js" defer></script>
 </head>
 
 <body>
 
     <div class="page">
 
-        <!-- ENCABEZADO -->
+        <!-- HEADER -->
 
         <header class="header">
-            <a href="/" class="header-brand">CERZ</a>
+            <a href="./" class="header-brand">CERZ</a>
         </header>
 
         <!-- RETÍCULA PRINCIPAL 3 × 3 -->
 
         <main class="main-grid">
 
-            <!-- CELDA SUPERIOR IZQUIERDA -->
+            <!-- CELDA 1,1: LOGO -->
 
             <div class="identity">
                 <img
-                    src="logo-cerz.png"
+                    src="logo-cerz-blanco-transparente.png"
                     alt="Símbolo de CERZ"
                     class="logo"
                 >
             </div>
 
-            <!-- CELDA INFERIOR DERECHA -->
+            <!-- CELDA 3,3: NAVEGACIÓN -->
 
             <nav class="navigation"
                  aria-label="Navegación principal">
 
-                <a href="arquitectura/"
-                   class="nav-item">
-
+                <a href="./arquitectura/" class="nav-item">
                     <span class="nav-number">01</span>
-
                     <span class="nav-name">
                         ARQUITECTURA || MIIC
                     </span>
-
                     <span class="nav-arrow"
                           aria-hidden="true">↗</span>
                 </a>
 
-                <a href="musica/"
-                   class="nav-item">
-
+                <a href="./musica/" class="nav-item">
                     <span class="nav-number">02</span>
-
-                    <span class="nav-name">
-                        MÚSICA
-                    </span>
-
+                    <span class="nav-name">MÚSICA</span>
                     <span class="nav-arrow"
                           aria-hidden="true">↗</span>
                 </a>
 
-                <a href="contacto/"
-                   class="nav-item">
-
+                <a href="./contacto/" class="nav-item">
                     <span class="nav-number">03</span>
-
-                    <span class="nav-name">
-                        CONTACTO
-                    </span>
-
+                    <span class="nav-name">CONTACTO</span>
                     <span class="nav-arrow"
                           aria-hidden="true">↗</span>
                 </a>
@@ -87,7 +72,7 @@
 
         </main>
 
-        <!-- PIE DE PÁGINA -->
+        <!-- FOOTER -->
 
         <footer class="footer">
             <span class="copyright">© 2026</span>
@@ -97,8 +82,7 @@
 
     <!-- CURSOR PERSONALIZADO -->
 
-    <div class="custom-cursor"
-         aria-hidden="true"></div>
+    <div class="custom-cursor" aria-hidden="true"></div>
 
 </body>
 </html>
