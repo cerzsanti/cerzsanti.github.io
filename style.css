@@ -1,10 +1,8 @@
 
-/* ======================================
+/* =====================================
    CERZ — INDEX
-   Retícula 3 × 3
-   ====================================== */
-
-/* 01 — VARIABLES */
+   RETÍCULA 3 × 3
+   ===================================== */
 
 :root {
     --background: #111111;
@@ -12,8 +10,6 @@
     --line: #666666;
     --margin: clamp(24px, 5vw, 76px);
 }
-
-/* 02 — CONFIGURACIÓN GENERAL */
 
 * {
     box-sizing: border-box;
@@ -31,7 +27,7 @@ body {
     font-family: Arial, Helvetica, sans-serif;
 }
 
-/* 03 — ESTRUCTURA DE PÁGINA */
+/* ESTRUCTURA GENERAL */
 
 .page {
     min-height: 100vh;
@@ -43,14 +39,14 @@ body {
     padding: 5vh var(--margin) 3vh;
 }
 
-/* 04 — HEADER */
+/* HEADER */
 
 .header {
+    height: 1px;
     border-top: 1px solid var(--line);
-    min-height: 1px;
 }
 
-/* 05 — RETÍCULA PRINCIPAL */
+/* RETÍCULA PRINCIPAL */
 
 .grid {
     display: grid;
@@ -58,13 +54,12 @@ body {
     grid-template-columns: repeat(3, minmax(0, 1fr));
     grid-template-rows: repeat(3, minmax(0, 1fr));
 
-    column-gap: 20px;
-    row-gap: 20px;
+    gap: 20px;
 
     min-height: 0;
 }
 
-/* 06 — IDENTIDAD: CELDA 1,1 */
+/* IDENTIDAD — CELDA 1,1 */
 
 .identity {
     grid-column: 1;
@@ -74,55 +69,56 @@ body {
     align-items: flex-start;
 
     gap: 14px;
+    padding-top: 55px;
 
-    padding-top: 8vh;
     min-width: 0;
 }
 
 .logo {
     display: block;
 
-    width: clamp(70px, 10vw, 160px);
+    width: clamp(75px, 10vw, 150px);
     height: auto;
+
+    flex-shrink: 0;
     object-fit: contain;
 
-    /* Convierte el logo negro en blanco */
     filter: invert(1);
 }
 
 .identity h1 {
     margin: 0;
 
-    font-size: clamp(64px, 7.5vw, 120px);
+    font-size: clamp(65px, 7.5vw, 115px);
     font-weight: 400;
-
     letter-spacing: -0.075em;
     line-height: 1;
 
     white-space: nowrap;
 }
 
-/* 07 — NAVEGACIÓN: CELDA 3,3 */
+/* MENÚ — CELDA 3,3 */
 
 .navigation {
     grid-column: 3;
     grid-row: 3;
 
     align-self: end;
+    justify-self: stretch;
 
     width: 100%;
-    margin-bottom: 4vh;
+    margin-bottom: 30px;
 }
 
 .nav-item {
     display: grid;
 
     grid-template-columns: 42px minmax(0, 1fr) 24px;
-
     gap: 12px;
+
     align-items: center;
 
-    min-height: 74px;
+    min-height: 75px;
     padding: 14px 0;
 
     border-top: 1px solid var(--line);
@@ -146,15 +142,12 @@ body {
 
 .arrow {
     font-size: 25px;
-    text-align: right;
     line-height: 1;
+    text-align: right;
 }
-
-/* Interacción sin animación */
 
 .nav-item:hover,
 .nav-item:focus-visible {
-    color: #ffffff;
     background: #252525;
 }
 
@@ -163,7 +156,7 @@ body {
     outline-offset: 3px;
 }
 
-/* 08 — FOOTER */
+/* FOOTER */
 
 .footer {
     border-top: 1px solid var(--line);
@@ -175,9 +168,7 @@ body {
     letter-spacing: 0.3em;
 }
 
-/* ======================================
-   09 — PANTALLAS INTERMEDIAS
-   ====================================== */
+/* TABLET */
 
 @media (max-width: 1100px) {
 
@@ -187,14 +178,12 @@ body {
 
     .navigation {
         grid-column: 2 / 4;
-        justify-self: end;
         max-width: 420px;
+        justify-self: end;
     }
 }
 
-/* ======================================
-   10 — CELULARES
-   ====================================== */
+/* CELULAR */
 
 @media (max-width: 600px) {
 
@@ -204,8 +193,6 @@ body {
     }
 
     .grid {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-        grid-template-rows: repeat(3, minmax(0, 1fr));
         gap: 10px;
     }
 
@@ -213,7 +200,7 @@ body {
         grid-column: 1 / 4;
         grid-row: 1;
 
-        padding-top: 55px;
+        padding-top: 45px;
         gap: 10px;
     }
 
@@ -230,7 +217,7 @@ body {
         grid-row: 3;
 
         max-width: none;
-        margin-bottom: 25px;
+        margin-bottom: 20px;
     }
 
     .nav-item {
