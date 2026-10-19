@@ -1,33 +1,29 @@
 
-// =======================================
+// ======================================
 // CERZ — CURSOR PERSONALIZADO
-// =======================================
+// ======================================
 
 const cursor = document.querySelector(".custom-cursor");
 
-const interactiveElements = document.querySelectorAll(
-    ".nav-item, .header-brand"
+const links = document.querySelectorAll(
+    ".nav-item"
 );
 
-const finePointer = window.matchMedia(
+const mouseDisponible = window.matchMedia(
     "(hover: hover) and (pointer: fine)"
 );
 
-if (cursor && finePointer.matches) {
-
-    // Seguir el movimiento del mouse
+if (cursor && mouseDisponible.matches) {
 
     document.addEventListener("pointermove", (event) => {
 
         if (event.pointerType !== "mouse") return;
 
-        cursor.style.left = `${event.clientX}px`;
-        cursor.style.top = `${event.clientY}px`;
+        cursor.style.left = event.clientX + "px";
+        cursor.style.top = event.clientY + "px";
         cursor.style.opacity = "1";
 
     });
-
-    // Ocultar cuando el puntero sale de la página
 
     document.addEventListener("mouseout", (event) => {
 
@@ -37,15 +33,13 @@ if (cursor && finePointer.matches) {
 
     });
 
-    // Transformación sobre enlaces
+    links.forEach((link) => {
 
-    interactiveElements.forEach((element) => {
-
-        element.addEventListener("mouseenter", () => {
+        link.addEventListener("mouseenter", () => {
             cursor.classList.add("is-hovering");
         });
 
-        element.addEventListener("mouseleave", () => {
+        link.addEventListener("mouseleave", () => {
             cursor.classList.remove("is-hovering");
         });
 
