@@ -1,0 +1,240 @@
+
+/* CERZ — VISOR EDITORIAL */
+
+:root {
+    --bg: #111111;
+    --fg: #f4f1eb;
+    --line: rgba(244, 241, 235, 0.5);
+    --margin: clamp(16px, 4vw, 65px);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+}
+
+body {
+    background: var(--bg);
+    color: var(--fg);
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+button,
+a {
+    font: inherit;
+}
+
+button {
+    cursor: pointer;
+}
+
+/* ESTRUCTURA GENERAL */
+
+.viewer {
+    width: 100%;
+    height: 100vh;
+    height: 100dvh;
+
+    display: grid;
+    grid-template-rows:
+        65px
+        minmax(0, 1fr)
+        65px;
+
+    padding: 12px var(--margin);
+}
+
+.viewer:fullscreen {
+    background: var(--bg);
+}
+
+/* HEADER */
+
+.viewer-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+
+    border-bottom: 1px solid var(--line);
+}
+
+.viewer-brand {
+    color: var(--fg);
+    text-decoration: none;
+    font-size: 25px;
+    letter-spacing: 0.06em;
+}
+
+.viewer-title {
+    font-size: 12px;
+    letter-spacing: 0.18em;
+    text-align: center;
+}
+
+/* ÁREA DE LECTURA */
+
+.viewer-stage {
+    position: relative;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    min-width: 0;
+    min-height: 0;
+
+    overflow: hidden;
+    padding: 14px 0;
+}
+
+#book {
+    display: none;
+    flex-shrink: 0;
+}
+
+/* PÁGINAS */
+
+.book-page {
+    background: #ffffff;
+    overflow: hidden;
+}
+
+.book-page img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: fill;
+    user-select: none;
+    -webkit-user-drag: none;
+}
+
+.loading {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+
+    margin: 0;
+    color: var(--fg);
+    font-size: 12px;
+    letter-spacing: 0.15em;
+    text-align: center;
+}
+
+/* FOOTER Y CONTROLES */
+
+.viewer-footer {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+
+    align-items: center;
+    gap: 12px;
+
+    border-top: 1px solid var(--line);
+}
+
+.viewer-footer > :last-child {
+    justify-self: end;
+}
+
+.text-button {
+    padding: 8px 0;
+    border: none;
+    background: none;
+
+    color: var(--fg);
+    text-decoration: none;
+
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    white-space: nowrap;
+}
+
+.text-button:hover {
+    opacity: 0.65;
+}
+
+.page-controls {
+    display: flex;
+    align-items: center;
+    gap: 22px;
+}
+
+.page-controls button {
+    border: none;
+    background: transparent;
+    color: var(--fg);
+    font-size: 26px;
+    padding: 8px;
+}
+
+.page-controls button:disabled {
+    opacity: 0.3;
+    cursor: default;
+}
+
+#counter {
+    min-width: 65px;
+    text-align: center;
+    font-size: 12px;
+    letter-spacing: 0.12em;
+}
+
+/* CELULARES */
+
+@media (max-width: 600px) {
+
+    .viewer {
+        grid-template-rows:
+            56px
+            minmax(0, 1fr)
+            75px;
+
+        padding: 8px 14px;
+    }
+
+    .viewer-brand {
+        font-size: 21px;
+    }
+
+    .viewer-title {
+        font-size: 9px;
+        letter-spacing: 0.06em;
+    }
+
+    .viewer-header .text-button {
+        font-size: 9px;
+        max-width: 85px;
+        white-space: normal;
+        text-align: right;
+    }
+
+    .viewer-stage {
+        padding: 8px 0;
+    }
+
+    .viewer-footer {
+        grid-template-columns: 1fr auto;
+        gap: 4px;
+    }
+
+    .viewer-footer > :last-child {
+        display: none;
+    }
+
+    .page-controls {
+        gap: 8px;
+    }
+
+    .text-button {
+        font-size: 9px;
+        letter-spacing: 0.05em;
+    }
+}
