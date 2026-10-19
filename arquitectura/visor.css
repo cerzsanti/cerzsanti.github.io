@@ -238,3 +238,10 @@ button {
         letter-spacing: 0.05em;
     }
 }
+.book-page {
+    background: #242424;
+}
+
+.book-page img:not([src]) {
+    visibility: hidden;
+}
