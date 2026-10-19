@@ -1,56 +1,71 @@
 
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CERZ — Arquitectura</title>
+    <meta name="theme-color" content="#111111">
+    <title>CERZ — Arquitectura, Música y Producción</title>
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
+    <div class="page">
 
-    <div class="container">
+        <!-- Intervención gráfica de fondo -->
+        <div class="red-field" aria-hidden="true"></div>
+        <div class="scanlines" aria-hidden="true"></div>
 
-        <header class="site-header">
-            <div class="logo">CERZ</div>
-            <div class="header-label">ARQUITECTURA / MIIC</div>
+        <!-- Encabezado sin texto -->
+        <header class="header" aria-label="Encabezado">
         </header>
 
-        <main>
+        <main class="main">
 
-            <section class="intro">
-                <p class="section-number">01 — PRESENTACIÓN</p>
+            <!-- Identidad CERZ -->
+            <div class="identity">
+                <img
+                    class="logo"
+                    src="logo-cerz-blanco.png"
+                    alt="Símbolo de CERZ"
+                >
 
-                <h1>Arquitectura como sistema de información.</h1>
+                <h1 class="wordmark" data-text="CERZ">
+                    CERZ
+                </h1>
+            </div>
 
-                <p class="intro-text">
-                    Diseño, modelado y análisis integrado de proyectos.
-                </p>
-            </section>
+            <!-- Índice principal -->
+            <nav class="navigation" aria-label="Navegación principal">
 
-            <section class="projects">
+                <a class="nav-item" href="arquitectura/">
+                    <span class="nav-number">01</span>
+                    <span class="nav-name">ARQUITECTURA</span>
+                    <span class="nav-arrow" aria-hidden="true">↗</span>
+                </a>
 
-                <article class="project-card">
-                    <span class="project-number">01 / PROYECTO</span>
-                    <h2>Casa Margen</h2>
-                </article>
+                <a class="nav-item" href="musica/">
+                    <span class="nav-number">02</span>
+                    <span class="nav-name">MÚSICA</span>
+                    <span class="nav-arrow" aria-hidden="true">↗</span>
+                </a>
 
-                <article class="project-card">
-                    <span class="project-number">02 / SISTEMA</span>
-                    <h2>MIIC</h2>
-                </article>
+                <a class="nav-item" href="contacto/">
+                    <span class="nav-number">03</span>
+                    <span class="nav-name">CONTACTO</span>
+                    <span class="nav-arrow" aria-hidden="true">↗</span>
+                </a>
 
-            </section>
+            </nav>
 
         </main>
 
-        <footer class="site-footer">
-            CERZ © 2026
+        <!-- Pie de página -->
+        <footer class="footer">
+            <span>© 2026</span>
         </footer>
 
     </div>
-
 </body>
 </html>
+
