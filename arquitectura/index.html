@@ -1,0 +1,80 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#111111">
+
+    <title>Casa Margen 02 — CERZ / Arquitectura</title>
+
+    <link rel="stylesheet" href="./visor.css">
+
+    <!-- Lector PDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+
+    <!-- Efecto de pasar páginas -->
+    <script src="https://cdn.jsdelivr.net/npm/page-flip@2.0.7/dist/js/page-flip.browser.js"></script>
+
+    <script src="./visor.js" defer></script>
+</head>
+
+<body>
+    <div class="viewer" id="viewer">
+
+        <header class="viewer-header">
+            <a href="../" class="viewer-brand">CERZ</a>
+
+            <span class="viewer-title">
+                ARQUITECTURA || MIIC
+            </span>
+
+            <button
+                id="fullscreen"
+                class="text-button"
+                type="button">
+                PANTALLA COMPLETA
+            </button>
+        </header>
+
+        <main class="viewer-stage" id="stage">
+
+            <div id="book" aria-label="Publicación Casa Margen 02">
+            </div>
+
+            <p id="loading" class="loading" role="status">
+                CARGANDO PUBLICACIÓN...
+            </p>
+
+        </main>
+
+        <footer class="viewer-footer">
+
+            <a href="./publicacion.pdf"
+               class="text-button"
+               download="Casa-Margen-02.pdf">
+                DESCARGAR PDF ↓
+            </a>
+
+            <div class="page-controls">
+                <button id="previous"
+                        type="button"
+                        aria-label="Página anterior">←</button>
+
+                <span id="counter">— / —</span>
+
+                <button id="next"
+                        type="button"
+                        aria-label="Página siguiente">→</button>
+            </div>
+
+            <a href="../" class="text-button">
+                VOLVER ↗
+            </a>
+
+        </footer>
+
+    </div>
+</body>
+</html>
