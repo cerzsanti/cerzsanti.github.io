@@ -1,5 +1,5 @@
 
-/* CERZ — VISOR EDITORIAL */
+/* CERZ — VISOR MIIC */
 
 :root {
     --bg: #111111;
@@ -34,7 +34,7 @@ button {
     cursor: pointer;
 }
 
-/* ESTRUCTURA GENERAL */
+/* ESTRUCTURA */
 
 .viewer {
     width: 100%;
@@ -42,16 +42,13 @@ button {
     height: 100dvh;
 
     display: grid;
+
     grid-template-rows:
         65px
         minmax(0, 1fr)
         65px;
 
     padding: 12px var(--margin);
-}
-
-.viewer:fullscreen {
-    background: var(--bg);
 }
 
 /* HEADER */
@@ -68,6 +65,7 @@ button {
 .viewer-brand {
     color: var(--fg);
     text-decoration: none;
+
     font-size: 25px;
     letter-spacing: 0.06em;
 }
@@ -75,10 +73,10 @@ button {
 .viewer-title {
     font-size: 12px;
     letter-spacing: 0.18em;
-    text-align: center;
+    text-align: right;
 }
 
-/* ÁREA DE LECTURA */
+/* LÁMINAS */
 
 .viewer-stage {
     position: relative;
@@ -99,36 +97,42 @@ button {
     flex-shrink: 0;
 }
 
-/* PÁGINAS */
-
 .book-page {
-    background: #ffffff;
+    background: #242424;
     overflow: hidden;
 }
 
 .book-page img {
     display: block;
+
     width: 100%;
     height: 100%;
     object-fit: fill;
+
     user-select: none;
     -webkit-user-drag: none;
+}
+
+.book-page img:not([src]) {
+    visibility: hidden;
 }
 
 .loading {
     position: absolute;
     left: 50%;
     top: 50%;
+
     transform: translate(-50%, -50%);
 
     margin: 0;
+
     color: var(--fg);
     font-size: 12px;
     letter-spacing: 0.15em;
     text-align: center;
 }
 
-/* FOOTER Y CONTROLES */
+/* FOOTER */
 
 .viewer-footer {
     display: grid;
@@ -144,8 +148,14 @@ button {
     justify-self: end;
 }
 
+.viewer-footer-label {
+    font-size: 11px;
+    letter-spacing: 0.12em;
+}
+
 .text-button {
     padding: 8px 0;
+
     border: none;
     background: none;
 
@@ -170,8 +180,10 @@ button {
 .page-controls button {
     border: none;
     background: transparent;
+
     color: var(--fg);
     font-size: 26px;
+
     padding: 8px;
 }
 
@@ -183,11 +195,12 @@ button {
 #counter {
     min-width: 65px;
     text-align: center;
+
     font-size: 12px;
     letter-spacing: 0.12em;
 }
 
-/* CELULARES */
+/* CELULAR */
 
 @media (max-width: 600px) {
 
@@ -209,13 +222,6 @@ button {
         letter-spacing: 0.06em;
     }
 
-    .viewer-header .text-button {
-        font-size: 9px;
-        max-width: 85px;
-        white-space: normal;
-        text-align: right;
-    }
-
     .viewer-stage {
         padding: 8px 0;
     }
@@ -229,19 +235,12 @@ button {
         display: none;
     }
 
+    .viewer-footer-label {
+        font-size: 9px;
+        letter-spacing: 0.04em;
+    }
+
     .page-controls {
         gap: 8px;
     }
-
-    .text-button {
-        font-size: 9px;
-        letter-spacing: 0.05em;
-    }
-}
-.book-page {
-    background: #242424;
-}
-
-.book-page img:not([src]) {
-    visibility: hidden;
 }
