@@ -3,7 +3,9 @@
 
 const cursor = document.querySelector(".custom-cursor");
 
-const links = document.querySelectorAll(".nav-item");
+const links = document.querySelectorAll(
+    ".nav-item, .contact-line a"
+);
 
 const mouseDisponible = window.matchMedia(
     "(hover: hover) and (pointer: fine)"
@@ -11,7 +13,8 @@ const mouseDisponible = window.matchMedia(
 
 if (cursor && mouseDisponible.matches) {
 
-    document.addEventListener("pointermove", (event) => {
+    document.addEventListener("pointermove", event => {
+
         if (event.pointerType !== "mouse") return;
 
         cursor.style.left = `${event.clientX}px`;
@@ -19,13 +22,15 @@ if (cursor && mouseDisponible.matches) {
         cursor.style.opacity = "1";
     });
 
-    document.addEventListener("mouseout", (event) => {
+    document.addEventListener("mouseout", event => {
+
         if (!event.relatedTarget) {
             cursor.style.opacity = "0";
         }
     });
 
-    links.forEach((link) => {
+    links.forEach(link => {
+
         link.addEventListener("mouseenter", () => {
             cursor.classList.add("is-hovering");
         });
