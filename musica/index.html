@@ -1,1 +1,292 @@
 
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#111111">
+
+    <title>Música — CERZ</title>
+
+    <link rel="stylesheet" href="../style.css">
+
+    <style>
+        /* CERZ — MÚSICA */
+
+        .music-page {
+            height: 100vh;
+            height: 100dvh;
+
+            display: grid;
+
+            grid-template-rows:
+                55px
+                minmax(0, 1fr)
+                48px;
+
+            padding:
+                clamp(12px, 3vh, 35px)
+                var(--margin)
+                clamp(10px, 2vh, 22px);
+        }
+
+        .music-main {
+            min-height: 0;
+            overflow-y: auto;
+
+            padding: 42px 0 55px;
+
+            scrollbar-width: thin;
+            scrollbar-color: #555 transparent;
+        }
+
+        .music-heading {
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            gap: 20px;
+
+            margin-bottom: 42px;
+        }
+
+        .music-heading h1 {
+            margin: 0;
+
+            font-size: clamp(20px, 3vw, 40px);
+            font-weight: 400;
+            letter-spacing: 0.04em;
+        }
+
+        .music-heading span {
+            font-size: 11px;
+            letter-spacing: 0.16em;
+        }
+
+        /* GALERÍA */
+
+        .music-gallery {
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, minmax(0, 1fr));
+
+            gap: 42px 25px;
+        }
+
+        .video-card {
+            display: block;
+            min-width: 0;
+
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .video-image {
+            position: relative;
+
+            aspect-ratio: 16 / 9;
+            background: #242424;
+
+            overflow: hidden;
+        }
+
+        .video-image img {
+            width: 100%;
+            height: 100%;
+
+            object-fit: cover;
+            display: block;
+
+            filter: grayscale(100%);
+
+            transition:
+                filter 300ms ease,
+                transform 400ms ease;
+        }
+
+        .video-card:hover img,
+        .video-card:focus-visible img {
+            filter: grayscale(0%);
+            transform: scale(1.025);
+        }
+
+        /* PLAY DIBUJADO CON CSS */
+
+        .video-play {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+
+            width: 42px;
+            height: 42px;
+
+            border: 1px solid white;
+            border-radius: 50%;
+
+            background: rgba(0, 0, 0, 0.25);
+
+            transform: translate(-50%, -50%);
+        }
+
+        .video-play::after {
+            content: "";
+
+            position: absolute;
+            top: 13px;
+            left: 17px;
+
+            border-top: 7px solid transparent;
+            border-bottom: 7px solid transparent;
+            border-left: 10px solid white;
+        }
+
+        /* INFORMACIÓN */
+
+        .video-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            gap: 15px;
+
+            padding: 15px 0;
+            border-bottom: 1px solid var(--line);
+        }
+
+        .video-title {
+            font-size: 12px;
+            font-weight: 400;
+            letter-spacing: 0.10em;
+            line-height: 1.5;
+        }
+
+        .video-number {
+            font-size: 11px;
+            opacity: 0.65;
+            white-space: nowrap;
+        }
+
+        /* FOOTER */
+
+        .music-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            gap: 20px;
+
+            border-top: 1px solid var(--line);
+        }
+
+        .music-footer .copyright {
+            position: static;
+        }
+
+        .back-link {
+            color: inherit;
+            text-decoration: none;
+
+            font-size: 11px;
+            letter-spacing: 0.12em;
+        }
+
+        .back-link:hover {
+            opacity: 0.65;
+        }
+
+        /* CELULAR */
+
+        @media (max-width: 600px) {
+
+            .music-page {
+                grid-template-rows:
+                    45px
+                    minmax(0, 1fr)
+                    42px;
+
+                padding: 12px 24px;
+            }
+
+            .music-main {
+                padding: 28px 0 45px;
+            }
+
+            .music-heading {
+                margin-bottom: 30px;
+            }
+
+            .music-heading h1 {
+                font-size: 24px;
+            }
+
+            .music-heading span {
+                font-size: 9px;
+            }
+
+            .music-gallery {
+                grid-template-columns: 1fr;
+                gap: 35px;
+            }
+
+            .music-footer .copyright {
+                font-size: 8px;
+                letter-spacing: 0;
+            }
+
+            .back-link {
+                font-size: 9px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="music-page">
+
+        <header class="header">
+            <a href="../" class="header-brand">
+                CERZ
+            </a>
+        </header>
+
+        <main class="music-main">
+
+            <div class="music-heading">
+
+                <h1>MÚSICA</h1>
+
+                <span>
+                    DJ SETS / AUDIOVISUAL
+                </span>
+
+            </div>
+
+            <section
+                class="music-gallery"
+                id="music-gallery"
+                aria-label="Galería de DJ sets">
+            </section>
+
+        </main>
+
+        <footer class="music-footer">
+
+            <span class="copyright">
+                © 2026 — Powered by Santiago Hernán Fernández Cardone
+            </span>
+
+            <a href="../" class="back-link">
+                VOLVER
+            </a>
+
+        </footer>
+
+    </div>
+
+    <script src="./musica.js" defer></script>
+
+</body>
+</html>
+
