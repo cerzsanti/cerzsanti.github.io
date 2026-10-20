@@ -1,7 +1,6 @@
 
 // ==========================================
-// CERZ — VISOR EDITORIAL OPTIMIZADO
-// CASA MARGEN 02
+// CERZ — VISOR PDF OPTIMIZADO
 // ==========================================
 
 const PDF_PATH = "./publicacion.pdf";
@@ -16,6 +15,7 @@ const counter = document.getElementById("counter");
 
 let pdfDocument = null;
 let flipBook = null;
+
 let pageElements = [];
 let imageUrls = [];
 
@@ -23,14 +23,10 @@ let totalPages = 0;
 let pageRatio = 765.24 / 1190.52;
 let resizeTimer = null;
 
-// PDF.JS
-
 if (window.pdfjsLib) {
     pdfjsLib.GlobalWorkerOptions.workerSrc =
         "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
 }
-
-// ESTADO DE CARGA
 
 function setStatus(message) {
     loading.textContent = message;
@@ -41,9 +37,10 @@ function hideStatus() {
     loading.style.display = "none";
 }
 
-// CALCULAR TAMAÑO DE LÁMINA
+// DIMENSIONES
 
 function getBookSize() {
+
     const availableWidth = Math.max(
         100,
         stage.clientWidth - 24
@@ -63,20 +60,26 @@ function getBookSize() {
 
     return {
         width: Math.max(100, width),
-        height: Math.max(100, Math.floor(width * pageRatio))
+        height: Math.max(
+            100,
+            Math.floor(width * pageRatio)
+        )
     };
 }
 
-// CREAR HOJAS VACÍAS
+// HOJAS
 
 function createPageElements() {
+
     pageElements = [];
 
     for (let i = 0; i < totalPages; i++) {
+
         const page = document.createElement("div");
         page.className = "book-page";
 
         const image = document.createElement("img");
+
         image.alt = `Lámina ${i + 1} de ${totalPages}`;
         image.draggable = false;
 
@@ -85,15 +88,13 @@ function createPageElements() {
     }
 }
 
-// RENDERIZAR UNA LÁMINA
+// RENDERIZADO
 
 async function renderPage(number) {
-    const pdfPage = await pdfDocument.getPage(number);
 
+    const pdfPage = await pdfDocument.getPage(number);
     const base = pdfPage.getViewport({ scale: 1 });
 
-    // Máximo 1500 px de ancho:
-    // suficiente para una lectura inicial rápida.
     const targetWidth = Math.min(
         1500,
         Math.max(900, base.width * 1.15)
@@ -117,24 +118,31 @@ async function renderPage(number) {
         viewport
     }).promise;
 
-    const blob = await new Promise((resolve, reject) => {
-        canvas.toBlob(
-            result => result
-                ? resolve(result)
-                : reject(new Error("No se pudo generar la lámina")),
-            "image/jpeg",
-            0.85
-        );
-    });
+    const blob = await new Promise(
+        (resolve, reject) => {
+
+            canvas.toBlob(
+                result => result
+                    ? resolve(result)
+                    : reject(
+                        new Error(
+                            "No se pudo generar la lámina"
+                        )
+                    ),
+                "image/jpeg",
+                0.85
+            );
+        }
+    );
 
     const url = URL.createObjectURL(blob);
     imageUrls.push(url);
 
-    const image = pageElements[number - 1].querySelector("img");
+    const image = pageElements[number - 1]
+        .querySelector("img");
 
     image.src = url;
 
-    // Esperar a que la imagen esté lista.
     if (image.decode) {
         await image.decode().catch(() => {});
     }
@@ -145,9 +153,10 @@ async function renderPage(number) {
     pdfPage.cleanup();
 }
 
-// CREAR LIBRO
+// LIBRO
 
 function createBook(startPage = 0) {
+
     if (flipBook) {
         flipBook.destroy();
         flipBook = null;
@@ -159,18 +168,18 @@ function createBook(startPage = 0) {
 
     book.style.width = `${size.width}px`;
     book.style.height = `${size.height}px`;
+    book.style.display = "block";
 
     pageElements.forEach(page => {
         book.appendChild(page);
     });
 
-    book.style.display = "block";
-
     flipBook = new St.PageFlip(book, {
+
         width: size.width,
         height: size.height,
-        size: "fixed",
 
+        size: "fixed",
         usePortrait: true,
         showCover: false,
 
@@ -179,7 +188,8 @@ function createBook(startPage = 0) {
         maxShadowOpacity: 0.25,
 
         mobileScrollSupport: false,
-        startPage: startPage
+        startPage
+
     });
 
     flipBook.loadFromHTML(pageElements);
@@ -189,12 +199,14 @@ function createBook(startPage = 0) {
     updateCounter();
 }
 
-// CONTADOR
+// CONTROLES
 
 function updateCounter() {
+
     if (!flipBook) return;
 
-    const current = flipBook.getCurrentPageIndex() + 1;
+    const current =
+        flipBook.getCurrentPageIndex() + 1;
 
     counter.textContent =
         `${String(current).padStart(2, "0")} / ` +
@@ -204,21 +216,25 @@ function updateCounter() {
     next.disabled = current >= totalPages;
 }
 
-// PERMITIR QUE EL NAVEGADOR ACTUALICE LA PANTALLA
-
 function nextFrame() {
+
     return new Promise(resolve => {
+
         requestAnimationFrame(() => {
             requestAnimationFrame(resolve);
         });
+
     });
 }
 
-// CARGAR PUBLICACIÓN
+// CARGA
 
 async function loadPublication() {
+
     try {
+
         if (!window.pdfjsLib || !window.St?.PageFlip) {
+
             throw new Error(
                 "No se cargaron las bibliotecas del visor."
             );
@@ -233,26 +249,35 @@ async function loadPublication() {
         totalPages = pdfDocument.numPages;
 
         const firstPage = await pdfDocument.getPage(1);
-        const viewport = firstPage.getViewport({ scale: 1 });
 
-        pageRatio = viewport.height / viewport.width;
+        const viewport = firstPage.getViewport({
+            scale: 1
+        });
+
+        pageRatio =
+            viewport.height / viewport.width;
 
         createPageElements();
 
-        // Primero renderizamos únicamente la portada.
+        // Mostrar primero la portada.
         await renderPage(1);
 
-        // El libro aparece inmediatamente.
         createBook(0);
         hideStatus();
 
         await nextFrame();
 
-        // Las demás láminas se preparan progresivamente.
-        for (let number = 2; number <= totalPages; number++) {
+        // Preparar las restantes progresivamente.
+        for (
+            let number = 2;
+            number <= totalPages;
+            number++
+        ) {
+
             try {
                 await renderPage(number);
             } catch (pageError) {
+
                 console.error(
                     `Error en lámina ${number}:`,
                     pageError
@@ -263,7 +288,11 @@ async function loadPublication() {
         }
 
     } catch (error) {
-        console.error("CERZ — Error del visor:", error);
+
+        console.error(
+            "CERZ — Error del visor:",
+            error
+        );
 
         setStatus(
             "NO SE PUDO ABRIR LA PUBLICACIÓN: " +
@@ -272,7 +301,7 @@ async function loadPublication() {
     }
 }
 
-// FLECHAS
+// BOTONES
 
 previous.addEventListener("click", () => {
     flipBook?.flipPrev();
@@ -285,6 +314,7 @@ next.addEventListener("click", () => {
 // TECLADO
 
 document.addEventListener("keydown", event => {
+
     if (!flipBook) return;
 
     if (event.key === "ArrowRight") {
@@ -296,26 +326,33 @@ document.addEventListener("keydown", event => {
     }
 });
 
-// ADAPTAR A CAMBIOS DE PANTALLA
+// RESPONSIVE
 
 window.addEventListener("resize", () => {
+
     clearTimeout(resizeTimer);
 
     resizeTimer = setTimeout(() => {
+
         if (!flipBook) return;
 
-        const currentPage = flipBook.getCurrentPageIndex();
+        const currentPage =
+            flipBook.getCurrentPageIndex();
 
         createBook(currentPage);
+
     }, 250);
 });
 
-// LIBERAR MEMORIA AL SALIR
+// LIMPIEZA
 
 window.addEventListener("pagehide", () => {
-    imageUrls.forEach(url => URL.revokeObjectURL(url));
+
+    imageUrls.forEach(url => {
+        URL.revokeObjectURL(url);
+    });
 });
 
-// INICIAR
+// INICIO
 
 loadPublication();
