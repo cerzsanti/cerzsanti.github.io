@@ -1,180 +1,284 @@
 
-// ==========================================
-// CERZ — ARCHIVO SONORO + DJ SETS
-// ==========================================
+/* =========================================
+   CERZ — MÚSICA
+   Reproductor + DJ sets
+   ========================================= */
 
-// REPRODUCTOR
+document.addEventListener("DOMContentLoaded", () => {
 
-const audio = document.getElementById("audio");
-const playButton = document.getElementById("play");
-const playIcon = document.getElementById("play-icon");
+    // ELEMENTOS DEL REPRODUCTOR
 
-const progress = document.getElementById("progress");
-const currentTime = document.getElementById("current-time");
-const duration = document.getElementById("duration");
-const volume = document.getElementById("volume");
-const status = document.getElementById("audio-status");
+    const audio = document.getElementById("audio");
 
-const playSVG = '<path d="M8 5 L19 12 L8 19 Z"/>';
-const pauseSVG =
-    '<rect x="6" y="5" width="4" height="14"/>' +
-    '<rect x="14" y="5" width="4" height="14"/>';
+    const playButton = document.getElementById("play");
+    const playIcon = document.getElementById("play-icon");
 
-function formatTime(seconds) {
-    if (!Number.isFinite(seconds)) return "00:00";
+    const progress = document.getElementById("progress");
 
-    const minutes = Math.floor(seconds / 60);
-    const remainder = Math.floor(seconds % 60);
+    const currentTime = document.getElementById("current-time");
+    const duration = document.getElementById("duration");
 
-    return (
-        String(minutes).padStart(2, "0") +
-        ":" +
-        String(remainder).padStart(2, "0")
-    );
-}
+    const volume = document.getElementById("volume");
+    const muteButton = document.getElementById("mute");
 
-function updatePlayButton() {
-    const playing = !audio.paused;
+    const status = document.getElementById("audio-status");
 
-    playIcon.innerHTML = playing ? pauseSVG : playSVG;
+    // ICONOS SVG
 
-    playButton.setAttribute(
-        "aria-label",
-        playing ? "Pausar" : "Reproducir"
-    );
-}
+    const playSVG =
+        '<path d="M8 5 L19 12 L8 19 Z"/>';
 
-playButton.addEventListener("click", async () => {
-    if (audio.paused) {
-        try {
-            await audio.play();
-            status.textContent = "";
-        } catch (error) {
-            status.textContent =
-                "NO SE PUDO INICIAR LA REPRODUCCIÓN";
-            console.error(error);
+    const pauseSVG =
+        '<rect x="6" y="5" width="4" height="14"/>' +
+        '<rect x="14" y="5" width="4" height="14"/>';
+
+    // FORMATO DE TIEMPO
+
+    function formatTime(seconds) {
+
+        if (!Number.isFinite(seconds)) {
+            return "00:00";
         }
-    } else {
-        audio.pause();
-    }
-});
 
-audio.addEventListener("play", updatePlayButton);
-audio.addEventListener("pause", updatePlayButton);
+        const minutes = Math.floor(seconds / 60);
+        const remainder = Math.floor(seconds % 60);
 
-audio.addEventListener("loadedmetadata", () => {
-    duration.textContent = formatTime(audio.duration);
-});
-
-audio.addEventListener("durationchange", () => {
-    duration.textContent = formatTime(audio.duration);
-});
-
-audio.addEventListener("timeupdate", () => {
-    currentTime.textContent = formatTime(audio.currentTime);
-
-    if (Number.isFinite(audio.duration) &&
-        audio.duration > 0) {
-
-        progress.value = Math.round(
-            (audio.currentTime / audio.duration) * 1000
+        return (
+            String(minutes).padStart(2, "0") +
+            ":" +
+            String(remainder).padStart(2, "0")
         );
     }
-});
 
-progress.addEventListener("input", () => {
-    if (Number.isFinite(audio.duration) &&
-        audio.duration > 0) {
+    // BOTÓN PLAY / PAUSA
 
-        audio.currentTime =
-            (Number(progress.value) / 1000) *
-            audio.duration;
+    function updatePlayButton() {
+
+        const playing = !audio.paused;
+
+        playIcon.innerHTML = playing
+            ? pauseSVG
+            : playSVG;
+
+        playButton.setAttribute(
+            "aria-label",
+            playing ? "Pausar" : "Reproducir"
+        );
     }
-});
 
-audio.volume = Number(volume.value);
+    playButton.addEventListener("click", async () => {
 
-volume.addEventListener("input", () => {
-    audio.volume = Number(volume.value);
-});
+        if (audio.paused) {
 
-audio.addEventListener("ended", () => {
-    updatePlayButton();
-    progress.value = 0;
-});
+            try {
+                await audio.play();
+                status.textContent = "";
+            } catch (error) {
 
-audio.addEventListener("error", () => {
-    status.textContent =
-        "NO SE PUDO CARGAR EL ARCHIVO DE AUDIO";
-});
+                status.textContent =
+                    "NO SE PUDO REPRODUCIR EL AUDIO";
 
-// DJ SETS
+                console.error(error);
+            }
 
-const videos = [
-    {
-        id: "cdaPJ3ApcDE",
-        titulo: "DJ SET 01"
-    },
-    {
-        id: "7eljrhr_SO4",
-        titulo: "DJ SET 02"
+        } else {
+
+            audio.pause();
+
+        }
+    });
+
+    audio.addEventListener("play", updatePlayButton);
+    audio.addEventListener("pause", updatePlayButton);
+
+    // DURACIÓN
+
+    function updateDuration() {
+
+        duration.textContent =
+            formatTime(audio.duration);
     }
-];
 
-const gallery = document.getElementById("music-gallery");
-
-videos.forEach((video, index) => {
-
-    const card = document.createElement("a");
-
-    card.className = "video-card";
-    card.href =
-        `https://www.youtube.com/watch?v=${encodeURIComponent(video.id)}`;
-
-    card.target = "_blank";
-    card.rel = "noopener noreferrer";
-
-    card.setAttribute(
-        "aria-label",
-        `Ver ${video.titulo} en YouTube`
+    audio.addEventListener(
+        "loadedmetadata",
+        updateDuration
     );
 
-    const image = document.createElement("div");
-    image.className = "video-image";
+    audio.addEventListener(
+        "durationchange",
+        updateDuration
+    );
 
-    const thumbnail = document.createElement("img");
+    // PROGRESO
 
-    thumbnail.src =
-        `https://i.ytimg.com/vi/${encodeURIComponent(video.id)}/hqdefault.jpg`;
+    audio.addEventListener("timeupdate", () => {
 
-    thumbnail.alt = video.titulo;
-    thumbnail.loading = "lazy";
+        currentTime.textContent =
+            formatTime(audio.currentTime);
 
-    const play = document.createElement("span");
+        if (
+            Number.isFinite(audio.duration) &&
+            audio.duration > 0
+        ) {
 
-    play.className = "video-play";
-    play.setAttribute("aria-hidden", "true");
+            progress.value = Math.round(
+                (audio.currentTime / audio.duration) * 1000
+            );
+        }
+    });
 
-    image.appendChild(thumbnail);
-    image.appendChild(play);
+    progress.addEventListener("input", () => {
 
-    const info = document.createElement("div");
-    info.className = "video-info";
+        if (
+            Number.isFinite(audio.duration) &&
+            audio.duration > 0
+        ) {
 
-    const title = document.createElement("span");
-    title.className = "video-title";
-    title.textContent = video.titulo;
+            audio.currentTime =
+                (Number(progress.value) / 1000) *
+                audio.duration;
+        }
+    });
 
-    const number = document.createElement("span");
-    number.className = "video-number";
-    number.textContent =
-        String(index + 1).padStart(2, "0");
+    // VOLUMEN
 
-    info.appendChild(title);
-    info.appendChild(number);
+    audio.volume = Number(volume.value);
 
-    card.appendChild(image);
-    card.appendChild(info);
+    volume.addEventListener("input", () => {
 
-    gallery.appendChild(card);
+        audio.volume = Number(volume.value);
+
+        if (audio.muted && audio.volume > 0) {
+            audio.muted = false;
+        }
+
+        updateMuteButton();
+    });
+
+    function updateMuteButton() {
+
+        muteButton.setAttribute(
+            "aria-label",
+            audio.muted || audio.volume === 0
+                ? "Activar sonido"
+                : "Silenciar"
+        );
+
+        muteButton.style.opacity =
+            audio.muted || audio.volume === 0
+                ? "0.4"
+                : "1";
+    }
+
+    muteButton.addEventListener("click", () => {
+
+        audio.muted = !audio.muted;
+
+        updateMuteButton();
+    });
+
+    // FINALIZACIÓN
+
+    audio.addEventListener("ended", () => {
+
+        updatePlayButton();
+
+        progress.value = 0;
+    });
+
+    // ERRORES
+
+    audio.addEventListener("error", () => {
+
+        status.textContent =
+            "NO SE PUDO CARGAR EL ARCHIVO DE AUDIO";
+    });
+
+    updatePlayButton();
+    updateMuteButton();
+
+    // =====================================
+    // DJ SETS
+    // =====================================
+
+    const videos = [
+        {
+            id: "cdaPJ3ApcDE",
+            titulo: "DJ SET 01"
+        },
+        {
+            id: "7eljrhr_SO4",
+            titulo: "DJ SET 02"
+        }
+    ];
+
+    const gallery =
+        document.getElementById("music-gallery");
+
+    videos.forEach((video, index) => {
+
+        const card = document.createElement("a");
+
+        card.className = "video-card";
+
+        card.href =
+            "https://www.youtube.com/watch?v=" +
+            encodeURIComponent(video.id);
+
+        card.target = "_blank";
+        card.rel = "noopener noreferrer";
+
+        card.setAttribute(
+            "aria-label",
+            `Ver ${video.titulo} en YouTube`
+        );
+
+        // MINIATURA
+
+        const image = document.createElement("div");
+        image.className = "video-image";
+
+        const thumbnail = document.createElement("img");
+
+        thumbnail.src =
+            `https://i.ytimg.com/vi/${video.id}/hqdefault.jpg`;
+
+        thumbnail.alt = video.titulo;
+        thumbnail.loading = "lazy";
+
+        const play = document.createElement("span");
+
+        play.className = "video-play";
+        play.setAttribute("aria-hidden", "true");
+
+        image.appendChild(thumbnail);
+        image.appendChild(play);
+
+        // INFORMACIÓN
+
+        const info = document.createElement("div");
+        info.className = "video-info";
+
+        const title = document.createElement("span");
+
+        title.className = "video-title";
+        title.textContent = video.titulo;
+
+        const number = document.createElement("span");
+
+        number.className = "video-number";
+
+        number.textContent =
+            String(index + 1).padStart(2, "0");
+
+        info.appendChild(title);
+        info.appendChild(number);
+
+        card.appendChild(image);
+        card.appendChild(info);
+
+        gallery.appendChild(card);
+
+    });
+
 });
