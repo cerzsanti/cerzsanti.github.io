@@ -2,86 +2,108 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#111111">
-
-    <title>Casa Margen 02 — CERZ</title>
-
-    <link rel="stylesheet" href="./visor.css">
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/page-flip@2.0.7/dist/js/page-flip.browser.js"></script>
-
-    <script src="./visor.js" defer></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#111111">
+  <title>Arquitectura || MIIC — CERZ</title>
+  <link rel="stylesheet" href="./galeria.css">
 </head>
-
 <body>
 
-    <div class="viewer">
+  <div class="page">
 
-        <header class="viewer-header">
+    <header class="site-header">
+      <a href="../" class="brand">CERZ</a>
+    </header>
 
-            <a href="../" class="viewer-brand">
-                CERZ
-            </a>
+    <main class="content">
 
-            <span class="viewer-title">
-                ARQUITECTURA || MIIC
-            </span>
+      <div class="section-heading">
+        <h1>ARQUITECTURA <span>|| MIIC</span></h1>
+        <span class="subtitle">ARCHIVO DE PROYECTOS</span>
+      </div>
 
-        </header>
+      <div class="section-label">01 / PROYECTOS</div>
 
-        <main class="viewer-stage" id="stage">
+      <section class="gallery" aria-label="Galería de arquitectura">
 
-            <div
-                id="book"
-                aria-label="Publicación Casa Margen 02">
-            </div>
+        <button class="project" type="button"
+                data-index="0">
+          <div class="project-image">
+            <img
+              src="./imagenes/CASA%20MARGEN%20_FRENTE_FOTO.png"
+              alt="Casa Margen — vista exterior"
+              loading="eager">
+          </div>
+          <div class="project-caption">
+            <span>CASA MARGEN</span>
+            <span class="arrow">↗</span>
+          </div>
+        </button>
 
-            <p
-                id="loading"
-                class="loading"
-                role="status">
-                CARGANDO PUBLICACIÓN...
-            </p>
+        <button class="project" type="button"
+                data-index="1">
+          <div class="project-image">
+            <img
+              src="./imagenes/Propuesta%20casa%20La%20Reserva.png"
+              alt="Propuesta residencial La Reserva"
+              loading="lazy">
+          </div>
+          <div class="project-caption">
+            <span>LA RESERVA</span>
+            <span class="arrow">↗</span>
+          </div>
+        </button>
 
-        </main>
+        <button class="project" type="button"
+                data-index="2">
+          <div class="project-image">
+            <img
+              src="./imagenes/Propuesta%20Viv%20Colectiva%20Yerba%20Buena.png"
+              alt="Vivienda colectiva Yerba Buena"
+              loading="lazy">
+          </div>
+          <div class="project-caption">
+            <span>VIVIENDA COLECTIVA / YERBA BUENA</span>
+            <span class="arrow">↗</span>
+          </div>
+        </button>
 
-        <footer class="viewer-footer">
+      </section>
+    </main>
 
-            <span class="viewer-footer-label">
-                CASA MARGEN 02
-            </span>
+    <footer class="site-footer">
+      <span>© 2026 — Powered by Santiago Hernán Fernández Cardone</span>
+      <a href="../">VOLVER</a>
+    </footer>
 
-            <div class="page-controls">
+  </div>
 
-                <button
-                    id="previous"
-                    type="button"
-                    aria-label="Página anterior">
-                    ←
-                </button>
+  <div class="lightbox" id="lightbox"
+       role="dialog" aria-modal="true"
+       aria-label="Visor de proyectos"
+       aria-hidden="true">
 
-                <span id="counter">— / —</span>
+    <button class="viewer-close" id="closeViewer"
+            aria-label="Cerrar visor">×</button>
 
-                <button
-                    id="next"
-                    type="button"
-                    aria-label="Página siguiente">
-                    →
-                </button>
+    <button class="viewer-prev" id="prevImage"
+            aria-label="Imagen anterior">←</button>
 
-            </div>
-
-            <a href="../" class="text-button">
-                VOLVER
-            </a>
-
-        </footer>
-
+    <div class="viewer-content">
+      <img id="viewerImage" src="" alt="">
+      <div class="viewer-caption">
+        <span id="viewerTitle"></span>
+        <span id="viewerCounter"></span>
+      </div>
     </div>
 
+    <button class="viewer-next" id="nextImage"
+            aria-label="Imagen siguiente">→</button>
+  </div>
+
+  <div class="custom-cursor" id="customCursor"></div>
+
+  <script src="./galeria.js"></script>
 </body>
 </html>
