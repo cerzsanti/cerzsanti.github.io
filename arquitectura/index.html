@@ -27,40 +27,40 @@
 
       <section class="gallery" aria-label="Galería de arquitectura">
 
-        <button class="project" type="button"
-                data-index="0">
+        <!-- 01 CASA MARGEN -->
+        <button class="project" type="button" data-index="0">
           <div class="project-image">
             <img
               src="./imagenes/CASA%20MARGEN%20_FRENTE_FOTO.png"
-              alt="Casa Margen — Frente"
+              alt="Casa Margen — frente"
               loading="eager">
           </div>
           <div class="project-caption">
-            <span>CASA MARGEN-La Reserva</span>
+            <span>CASA MARGEN / LA RESERVA</span>
             <span class="arrow">↗</span>
           </div>
         </button>
 
-        <button class="project" type="button"
-                data-index="1">
+        <!-- 02 LA RESERVA -->
+        <button class="project" type="button" data-index="1">
           <div class="project-image">
             <img
               src="./imagenes/Propuesta%20casa%20La%20Reserva.png"
-              alt="Propuesta Casa en La Reserva"
+              alt="Propuesta residencial en La Reserva"
               loading="lazy">
           </div>
           <div class="project-caption">
-            <span>LA RESERVA</span>
+            <span>LA RESERVA / VIVIENDA</span>
             <span class="arrow">↗</span>
           </div>
         </button>
 
-        <button class="project" type="button"
-                data-index="2">
+        <!-- 03 VIVIENDA COLECTIVA -->
+        <button class="project" type="button" data-index="2">
           <div class="project-image">
             <img
               src="./imagenes/Propuesta%20Viv%20Colectiva%20Yerba%20Buena.png"
-              alt="Propuesta de Acceso- Vivienda Colectiva- Yerba Buena"
+              alt="Propuesta de vivienda colectiva en Yerba Buena"
               loading="lazy">
           </div>
           <div class="project-caption">
@@ -69,7 +69,36 @@
           </div>
         </button>
 
+        <!-- 04 ESPACIO PARA EVENTOS -->
+        <button class="project" type="button" data-index="3">
+          <div class="project-image">
+            <img
+              src="./imagenes/Fiesta%20al%20anochecer%20junto%20a%20la%20piscina.png"
+              alt="Espacio para eventos junto a una piscina al anochecer"
+              loading="lazy">
+          </div>
+          <div class="project-caption">
+            <span>ESPACIO PARA EVENTOS</span>
+            <span class="arrow">↗</span>
+          </div>
+        </button>
+
+        <!-- 05 DETALLE CONSTRUCTIVO -->
+        <button class="project" type="button" data-index="4">
+          <div class="project-image">
+            <img
+              src="./imagenes/Conexi%C3%B3n%20moderna%20de%20fachada%20y%20cubierta.png"
+              alt="Detalle constructivo de conexión entre fachada y cubierta"
+              loading="lazy">
+          </div>
+          <div class="project-caption">
+            <span>DETALLE CONSTRUCTIVO / FACHADA Y CUBIERTA</span>
+            <span class="arrow">↗</span>
+          </div>
+        </button>
+
       </section>
+
     </main>
 
     <footer class="site-footer">
@@ -79,31 +108,47 @@
 
   </div>
 
-  <div class="lightbox" id="lightbox"
-       role="dialog" aria-modal="true"
-       aria-label="Visor de proyectos"
-       aria-hidden="true">
+  <!-- VISOR -->
+  <div
+    class="lightbox"
+    id="lightbox"
+    role="dialog"
+    aria-modal="true"
+    aria-label="Visor de proyectos"
+    aria-hidden="true">
 
-    <button class="viewer-close" id="closeViewer"
-            aria-label="Cerrar visor">×</button>
+    <button
+      class="viewer-close"
+      id="closeViewer"
+      type="button"
+      aria-label="Cerrar visor">×</button>
 
-    <button class="viewer-prev" id="prevImage"
-            aria-label="Imagen anterior">←</button>
+    <button
+      class="viewer-prev"
+      id="prevImage"
+      type="button"
+      aria-label="Imagen anterior">←</button>
 
     <div class="viewer-content">
-      <img id="viewerImage" src="" alt="">
+      <img id="viewerImage" alt="">
+
       <div class="viewer-caption">
         <span id="viewerTitle"></span>
         <span id="viewerCounter"></span>
       </div>
     </div>
 
-    <button class="viewer-next" id="nextImage"
-            aria-label="Imagen siguiente">→</button>
+    <button
+      class="viewer-next"
+      id="nextImage"
+      type="button"
+      aria-label="Imagen siguiente">→</button>
+
   </div>
 
   <div class="custom-cursor" id="customCursor"></div>
 
   <script src="./galeria.js"></script>
+
 </body>
 </html>
