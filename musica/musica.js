@@ -1,29 +1,12 @@
 
 /* =========================================
    CERZ — MÚSICA
-   Reproductor + DJ sets
+   Reproductores múltiples + DJ sets
    ========================================= */
 
 document.addEventListener("DOMContentLoaded", () => {
 
-    // ELEMENTOS DEL REPRODUCTOR
-
-    const audio = document.getElementById("audio");
-
-    const playButton = document.getElementById("play");
-    const playIcon = document.getElementById("play-icon");
-
-    const progress = document.getElementById("progress");
-
-    const currentTime = document.getElementById("current-time");
-    const duration = document.getElementById("duration");
-
-    const volume = document.getElementById("volume");
-    const muteButton = document.getElementById("mute");
-
-    const status = document.getElementById("audio-status");
-
-    // ICONOS SVG
+    const players = document.querySelectorAll(".audio-player");
 
     const playSVG =
         '<path d="M8 5 L19 12 L8 19 Z"/>';
@@ -31,8 +14,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const pauseSVG =
         '<rect x="6" y="5" width="4" height="14"/>' +
         '<rect x="14" y="5" width="4" height="14"/>';
-
-    // FORMATO DE TIEMPO
 
     function formatTime(seconds) {
 
@@ -50,155 +31,213 @@ document.addEventListener("DOMContentLoaded", () => {
         );
     }
 
-    // BOTÓN PLAY / PAUSA
+    // CONFIGURAR CADA REPRODUCTOR
 
-    function updatePlayButton() {
+    players.forEach(player => {
 
-        const playing = !audio.paused;
+        const audio = player.querySelector("audio");
 
-        playIcon.innerHTML = playing
-            ? pauseSVG
-            : playSVG;
+        const playButton =
+            player.querySelector(".play-button");
 
-        playButton.setAttribute(
-            "aria-label",
-            playing ? "Pausar" : "Reproducir"
-        );
-    }
+        const playIcon =
+            player.querySelector(".play-icon");
 
-    playButton.addEventListener("click", async () => {
+        const progress =
+            player.querySelector(".progress");
 
-        if (audio.paused) {
+        const currentTime =
+            player.querySelector(".current-time");
 
-            try {
-                await audio.play();
-                status.textContent = "";
-            } catch (error) {
+        const duration =
+            player.querySelector(".duration");
 
-                status.textContent =
-                    "NO SE PUDO REPRODUCIR EL AUDIO";
+        const volume =
+            player.querySelector(".volume");
 
-                console.error(error);
-            }
+        const muteButton =
+            player.querySelector(".mute-button");
 
-        } else {
+        const status =
+            player.querySelector(".audio-status");
 
-            audio.pause();
+        function updatePlayButton() {
 
-        }
-    });
+            const playing = !audio.paused;
 
-    audio.addEventListener("play", updatePlayButton);
-    audio.addEventListener("pause", updatePlayButton);
+            playIcon.innerHTML = playing
+                ? pauseSVG
+                : playSVG;
 
-    // DURACIÓN
-
-    function updateDuration() {
-
-        duration.textContent =
-            formatTime(audio.duration);
-    }
-
-    audio.addEventListener(
-        "loadedmetadata",
-        updateDuration
-    );
-
-    audio.addEventListener(
-        "durationchange",
-        updateDuration
-    );
-
-    // PROGRESO
-
-    audio.addEventListener("timeupdate", () => {
-
-        currentTime.textContent =
-            formatTime(audio.currentTime);
-
-        if (
-            Number.isFinite(audio.duration) &&
-            audio.duration > 0
-        ) {
-
-            progress.value = Math.round(
-                (audio.currentTime / audio.duration) * 1000
+            playButton.setAttribute(
+                "aria-label",
+                playing ? "Pausar" : "Reproducir"
             );
         }
-    });
 
-    progress.addEventListener("input", () => {
+        playButton.addEventListener("click", async () => {
 
-        if (
-            Number.isFinite(audio.duration) &&
-            audio.duration > 0
-        ) {
+            if (audio.paused) {
 
-            audio.currentTime =
-                (Number(progress.value) / 1000) *
-                audio.duration;
+                // PAUSAR CUALQUIER OTRA CANCIÓN
+
+                players.forEach(otherPlayer => {
+
+                    const otherAudio =
+                        otherPlayer.querySelector("audio");
+
+                    if (otherAudio !== audio) {
+                        otherAudio.pause();
+                    }
+
+                });
+
+                try {
+
+                    await audio.play();
+                    status.textContent = "";
+
+                } catch (error) {
+
+                    status.textContent =
+                        "NO SE PUDO REPRODUCIR EL AUDIO";
+
+                    console.error(error);
+                }
+
+            } else {
+
+                audio.pause();
+
+            }
+
+        });
+
+        audio.addEventListener("play", () => {
+
+            players.forEach(otherPlayer => {
+
+                const otherAudio =
+                    otherPlayer.querySelector("audio");
+
+                if (otherAudio !== audio) {
+                    otherAudio.pause();
+                }
+
+            });
+
+            updatePlayButton();
+        });
+
+        audio.addEventListener("pause", updatePlayButton);
+
+        function updateDuration() {
+
+            duration.textContent =
+                formatTime(audio.duration);
         }
-    });
 
-    // VOLUMEN
+        audio.addEventListener(
+            "loadedmetadata",
+            updateDuration
+        );
 
-    audio.volume = Number(volume.value);
+        audio.addEventListener(
+            "durationchange",
+            updateDuration
+        );
 
-    volume.addEventListener("input", () => {
+        audio.addEventListener("timeupdate", () => {
+
+            currentTime.textContent =
+                formatTime(audio.currentTime);
+
+            if (
+                Number.isFinite(audio.duration) &&
+                audio.duration > 0
+            ) {
+
+                progress.value = Math.round(
+                    (audio.currentTime / audio.duration) * 1000
+                );
+            }
+
+        });
+
+        progress.addEventListener("input", () => {
+
+            if (
+                Number.isFinite(audio.duration) &&
+                audio.duration > 0
+            ) {
+
+                audio.currentTime =
+                    (Number(progress.value) / 1000) *
+                    audio.duration;
+            }
+
+        });
+
+        // VOLUMEN
 
         audio.volume = Number(volume.value);
 
-        if (audio.muted && audio.volume > 0) {
-            audio.muted = false;
+        volume.addEventListener("input", () => {
+
+            audio.volume = Number(volume.value);
+
+            if (audio.muted && audio.volume > 0) {
+                audio.muted = false;
+            }
+
+            updateMuteButton();
+        });
+
+        function updateMuteButton() {
+
+            const muted =
+                audio.muted || audio.volume === 0;
+
+            muteButton.setAttribute(
+                "aria-label",
+                muted ? "Activar sonido" : "Silenciar"
+            );
+
+            muteButton.style.opacity =
+                muted ? "0.4" : "1";
         }
 
-        updateMuteButton();
-    });
+        muteButton.addEventListener("click", () => {
 
-    function updateMuteButton() {
+            audio.muted = !audio.muted;
 
-        muteButton.setAttribute(
-            "aria-label",
-            audio.muted || audio.volume === 0
-                ? "Activar sonido"
-                : "Silenciar"
-        );
+            updateMuteButton();
+        });
 
-        muteButton.style.opacity =
-            audio.muted || audio.volume === 0
-                ? "0.4"
-                : "1";
-    }
+        // FINALIZACIÓN
 
-    muteButton.addEventListener("click", () => {
+        audio.addEventListener("ended", () => {
 
-        audio.muted = !audio.muted;
+            updatePlayButton();
 
-        updateMuteButton();
-    });
+            progress.value = 0;
+        });
 
-    // FINALIZACIÓN
+        // ERRORES
 
-    audio.addEventListener("ended", () => {
+        audio.addEventListener("error", () => {
+
+            status.textContent =
+                "NO SE PUDO CARGAR EL ARCHIVO DE AUDIO";
+        });
 
         updatePlayButton();
+        updateMuteButton();
 
-        progress.value = 0;
     });
-
-    // ERRORES
-
-    audio.addEventListener("error", () => {
-
-        status.textContent =
-            "NO SE PUDO CARGAR EL ARCHIVO DE AUDIO";
-    });
-
-    updatePlayButton();
-    updateMuteButton();
 
     // =====================================
-    // DJ SETS
+    // DJ SETS — SIN MODIFICACIONES
     // =====================================
 
     const videos = [
@@ -233,8 +272,6 @@ document.addEventListener("DOMContentLoaded", () => {
             `Ver ${video.titulo} en YouTube`
         );
 
-        // MINIATURA
-
         const image = document.createElement("div");
         image.className = "video-image";
 
@@ -253,8 +290,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
         image.appendChild(thumbnail);
         image.appendChild(play);
-
-        // INFORMACIÓN
 
         const info = document.createElement("div");
         info.className = "video-info";
