@@ -17,17 +17,11 @@
 
     <div class="page">
 
-        <!-- ENCABEZADO -->
-
         <header class="site-header">
             <a href="../" class="brand">CERZ</a>
         </header>
 
-        <!-- CONTENIDO -->
-
         <main class="music-main">
-
-            <!-- CANCIONES -->
 
             <section class="music-section"
                      aria-label="Canciones">
@@ -36,29 +30,27 @@
                     <span>01 / CANCIONES</span>
                 </div>
 
-                <article class="release">
+                <!-- TODO DICHO — NUEVO LANZAMIENTO -->
 
-                    <!-- PORTADA -->
+                <article class="release">
 
                     <div class="release-cover">
                         <img
-                            src="./CERZ_BUENOS MODALES_tapa.jpg"
-                            alt="Portada de Buenos Modales — CERZ"
+                            src="./TODO%20DICHO.png"
+                            alt="Portada de Todo Dicho — CERZ"
                             loading="eager">
                     </div>
-
-                    <!-- INFORMACIÓN Y AUDIO -->
 
                     <div class="release-content">
 
                         <div class="release-information">
 
                             <span class="release-index">
-                                CERZ
+                                CERZ / NUEVO LANZAMIENTO
                             </span>
 
                             <h1 class="release-title">
-                                BUENOS MODALES
+                                TODO DICHO
                             </h1>
 
                             <span class="release-description">
@@ -70,26 +62,22 @@
                         <div class="audio-player">
 
                             <audio
-                                id="audio"
                                 preload="metadata"
-                                src="./02_OCT%20Project.mp3">
+                                src="./TODO%20DICHO.mp3">
                             </audio>
 
                             <div class="player-controls">
 
                                 <button
-                                    id="play"
                                     class="play-button"
                                     type="button"
                                     aria-label="Reproducir">
 
                                     <svg
-                                        id="play-icon"
+                                        class="play-icon"
                                         viewBox="0 0 24 24"
                                         aria-hidden="true">
-
                                         <path d="M8 5 L19 12 L8 19 Z"/>
-
                                     </svg>
 
                                 </button>
@@ -97,7 +85,6 @@
                                 <div class="progress-area">
 
                                     <input
-                                        id="progress"
                                         class="progress"
                                         type="range"
                                         min="0"
@@ -106,15 +93,8 @@
                                         aria-label="Posición de reproducción">
 
                                     <div class="time-row">
-
-                                        <span id="current-time">
-                                            00:00
-                                        </span>
-
-                                        <span id="duration">
-                                            00:00
-                                        </span>
-
+                                        <span class="current-time">00:00</span>
+                                        <span class="duration">00:00</span>
                                     </div>
 
                                 </div>
@@ -122,7 +102,6 @@
                                 <div class="volume-control">
 
                                     <button
-                                        id="mute"
                                         class="mute-button"
                                         type="button"
                                         aria-label="Silenciar">
@@ -147,7 +126,7 @@
                                     </button>
 
                                     <input
-                                        id="volume"
+                                        class="volume"
                                         type="range"
                                         min="0"
                                         max="1"
@@ -159,11 +138,125 @@
 
                             </div>
 
-                            <p
-                                id="audio-status"
-                                class="audio-status"
-                                role="status">
-                            </p>
+                            <p class="audio-status"
+                               role="status"></p>
+
+                        </div>
+
+                    </div>
+
+                </article>
+
+                <!-- BUENOS MODALES — LANZAMIENTO ANTERIOR -->
+
+                <article class="release">
+
+                    <div class="release-cover">
+                        <img
+                            src="./CERZ_BUENOS MODALES_tapa.jpg"
+                            alt="Portada de Buenos Modales — CERZ"
+                            loading="lazy">
+                    </div>
+
+                    <div class="release-content">
+
+                        <div class="release-information">
+
+                            <span class="release-index">
+                                CERZ
+                            </span>
+
+                            <h2 class="release-title">
+                                BUENOS MODALES
+                            </h2>
+
+                            <span class="release-description">
+                                Single
+                            </span>
+
+                        </div>
+
+                        <div class="audio-player">
+
+                            <audio
+                                preload="metadata"
+                                src="./02_OCT%20Project.mp3">
+                            </audio>
+
+                            <div class="player-controls">
+
+                                <button
+                                    class="play-button"
+                                    type="button"
+                                    aria-label="Reproducir">
+
+                                    <svg
+                                        class="play-icon"
+                                        viewBox="0 0 24 24"
+                                        aria-hidden="true">
+                                        <path d="M8 5 L19 12 L8 19 Z"/>
+                                    </svg>
+
+                                </button>
+
+                                <div class="progress-area">
+
+                                    <input
+                                        class="progress"
+                                        type="range"
+                                        min="0"
+                                        max="1000"
+                                        value="0"
+                                        aria-label="Posición de reproducción">
+
+                                    <div class="time-row">
+                                        <span class="current-time">00:00</span>
+                                        <span class="duration">00:00</span>
+                                    </div>
+
+                                </div>
+
+                                <div class="volume-control">
+
+                                    <button
+                                        class="mute-button"
+                                        type="button"
+                                        aria-label="Silenciar">
+
+                                        <svg viewBox="0 0 24 24"
+                                             aria-hidden="true">
+
+                                            <path
+                                                d="M4 9 H8 L13 5 V19 L8 15 H4 Z"
+                                                fill="none"
+                                                stroke="currentColor"
+                                                stroke-width="1.5"/>
+
+                                            <path
+                                                d="M16 9 Q19 12 16 15"
+                                                fill="none"
+                                                stroke="currentColor"
+                                                stroke-width="1.5"/>
+
+                                        </svg>
+
+                                    </button>
+
+                                    <input
+                                        class="volume"
+                                        type="range"
+                                        min="0"
+                                        max="1"
+                                        step="0.01"
+                                        value="0.8"
+                                        aria-label="Volumen">
+
+                                </div>
+
+                            </div>
+
+                            <p class="audio-status"
+                               role="status"></p>
 
                         </div>
 
@@ -182,16 +275,13 @@
                     <span>02 / DJ SETS</span>
                 </div>
 
-                <div
-                    id="music-gallery"
-                    class="music-gallery">
+                <div id="music-gallery"
+                     class="music-gallery">
                 </div>
 
             </section>
 
         </main>
-
-        <!-- PIE -->
 
         <footer class="site-footer">
 
