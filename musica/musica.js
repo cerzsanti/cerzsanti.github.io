@@ -6,7 +6,12 @@
 
 document.addEventListener("DOMContentLoaded", () => {
 
-    const players = document.querySelectorAll(".audio-player");
+    // =====================================
+    // REPRODUCTORES
+    // =====================================
+
+    const players =
+        document.querySelectorAll(".audio-player");
 
     const playSVG =
         '<path d="M8 5 L19 12 L8 19 Z"/>';
@@ -31,11 +36,10 @@ document.addEventListener("DOMContentLoaded", () => {
         );
     }
 
-    // CONFIGURAR CADA REPRODUCTOR
-
     players.forEach(player => {
 
-        const audio = player.querySelector("audio");
+        const audio =
+            player.querySelector("audio");
 
         const playButton =
             player.querySelector(".play-button");
@@ -61,13 +65,14 @@ document.addEventListener("DOMContentLoaded", () => {
         const status =
             player.querySelector(".audio-status");
 
+        // PLAY / PAUSA
+
         function updatePlayButton() {
 
             const playing = !audio.paused;
 
-            playIcon.innerHTML = playing
-                ? pauseSVG
-                : playSVG;
+            playIcon.innerHTML =
+                playing ? pauseSVG : playSVG;
 
             playButton.setAttribute(
                 "aria-label",
@@ -75,26 +80,30 @@ document.addEventListener("DOMContentLoaded", () => {
             );
         }
 
+        function pauseOtherPlayers() {
+
+            players.forEach(otherPlayer => {
+
+                const otherAudio =
+                    otherPlayer.querySelector("audio");
+
+                if (otherAudio !== audio) {
+                    otherAudio.pause();
+                }
+
+            });
+        }
+
         playButton.addEventListener("click", async () => {
 
             if (audio.paused) {
 
-                // PAUSAR CUALQUIER OTRA CANCIÓN
-
-                players.forEach(otherPlayer => {
-
-                    const otherAudio =
-                        otherPlayer.querySelector("audio");
-
-                    if (otherAudio !== audio) {
-                        otherAudio.pause();
-                    }
-
-                });
+                pauseOtherPlayers();
 
                 try {
 
                     await audio.play();
+
                     status.textContent = "";
 
                 } catch (error) {
@@ -115,21 +124,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
         audio.addEventListener("play", () => {
 
-            players.forEach(otherPlayer => {
-
-                const otherAudio =
-                    otherPlayer.querySelector("audio");
-
-                if (otherAudio !== audio) {
-                    otherAudio.pause();
-                }
-
-            });
-
+            pauseOtherPlayers();
             updatePlayButton();
         });
 
-        audio.addEventListener("pause", updatePlayButton);
+        audio.addEventListener(
+            "pause",
+            updatePlayButton
+        );
+
+        // DURACIÓN
 
         function updateDuration() {
 
@@ -147,6 +151,8 @@ document.addEventListener("DOMContentLoaded", () => {
             updateDuration
         );
 
+        // PROGRESO
+
         audio.addEventListener("timeupdate", () => {
 
             currentTime.textContent =
@@ -160,6 +166,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 progress.value = Math.round(
                     (audio.currentTime / audio.duration) * 1000
                 );
+
             }
 
         });
@@ -174,6 +181,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 audio.currentTime =
                     (Number(progress.value) / 1000) *
                     audio.duration;
+
             }
 
         });
@@ -181,6 +189,22 @@ document.addEventListener("DOMContentLoaded", () => {
         // VOLUMEN
 
         audio.volume = Number(volume.value);
+
+        function updateMuteButton() {
+
+            const muted =
+                audio.muted || audio.volume === 0;
+
+            muteButton.setAttribute(
+                "aria-label",
+                muted
+                    ? "Activar sonido"
+                    : "Silenciar"
+            );
+
+            muteButton.style.opacity =
+                muted ? "0.4" : "1";
+        }
 
         volume.addEventListener("input", () => {
 
@@ -191,27 +215,15 @@ document.addEventListener("DOMContentLoaded", () => {
             }
 
             updateMuteButton();
+
         });
-
-        function updateMuteButton() {
-
-            const muted =
-                audio.muted || audio.volume === 0;
-
-            muteButton.setAttribute(
-                "aria-label",
-                muted ? "Activar sonido" : "Silenciar"
-            );
-
-            muteButton.style.opacity =
-                muted ? "0.4" : "1";
-        }
 
         muteButton.addEventListener("click", () => {
 
             audio.muted = !audio.muted;
 
             updateMuteButton();
+
         });
 
         // FINALIZACIÓN
@@ -221,6 +233,7 @@ document.addEventListener("DOMContentLoaded", () => {
             updatePlayButton();
 
             progress.value = 0;
+
         });
 
         // ERRORES
@@ -229,6 +242,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             status.textContent =
                 "NO SE PUDO CARGAR EL ARCHIVO DE AUDIO";
+
         });
 
         updatePlayButton();
@@ -237,7 +251,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     // =====================================
-    // DJ SETS — SIN MODIFICACIONES
+    // DJ SETS
     // =====================================
 
     const videos = [
@@ -272,6 +286,8 @@ document.addEventListener("DOMContentLoaded", () => {
             `Ver ${video.titulo} en YouTube`
         );
 
+        // MINIATURA
+
         const image = document.createElement("div");
         image.className = "video-image";
 
@@ -290,6 +306,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
         image.appendChild(thumbnail);
         image.appendChild(play);
+
+        // INFORMACIÓN
 
         const info = document.createElement("div");
         info.className = "video-info";
