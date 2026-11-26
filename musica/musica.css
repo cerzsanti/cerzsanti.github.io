@@ -108,7 +108,7 @@ a {
     letter-spacing: .16em;
 }
 
-/* PUBLICACIÓN */
+/* PUBLICACIONES */
 
 .release {
     display: grid;
@@ -120,11 +120,8 @@ a {
     gap: clamp(35px, 6vw, 100px);
 
     align-items: stretch;
-
     padding-top: 42px;
 }
-
-/* SEPARACIÓN ENTRE CANCIONES */
 
 .release + .release {
     margin-top: 55px;
@@ -132,7 +129,7 @@ a {
     border-top: 1px solid var(--line);
 }
 
-/* TAPA */
+/* TAPAS */
 
 .release-cover {
     width: 100%;
@@ -151,7 +148,7 @@ a {
     object-fit: cover;
 }
 
-/* DATOS DE LA CANCIÓN */
+/* INFORMACIÓN */
 
 .release-content {
     min-width: 0;
@@ -191,7 +188,7 @@ a {
     letter-spacing: .15em;
 }
 
-/* REPRODUCTOR */
+/* REPRODUCTORES */
 
 .audio-player {
     width: 100%;
@@ -304,6 +301,129 @@ a {
 
     font-size: 10px;
     letter-spacing: .08em;
+}
+
+/* =========================================
+   DISCOGRAFÍA
+   ========================================= */
+
+.discography-status {
+    margin: 25px 0;
+
+    color: var(--muted);
+
+    font-size: 10px;
+    letter-spacing: .1em;
+}
+
+.discography-status[hidden] {
+    display: none;
+}
+
+.discography-gallery {
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, minmax(0, 1fr));
+
+    column-gap: 28px;
+    row-gap: 42px;
+
+    margin-top: 32px;
+}
+
+.discography-card {
+    display: flex;
+    flex-direction: column;
+
+    min-width: 0;
+}
+
+.discography-cover {
+    position: relative;
+
+    width: 100%;
+    aspect-ratio: 1 / 1;
+
+    background: #222;
+    overflow: hidden;
+}
+
+.discography-cover img {
+    display: block;
+
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+
+    transition:
+        transform .4s ease,
+        opacity .3s ease;
+}
+
+.discography-card:hover img {
+    transform: scale(1.035);
+    opacity: .8;
+}
+
+.discography-info {
+    display: flex;
+    flex-direction: column;
+
+    flex: 1;
+
+    gap: 8px;
+    padding: 15px 0;
+
+    border-bottom: 1px solid var(--line);
+}
+
+.discography-artist {
+    color: var(--muted);
+
+    font-size: 10px;
+    letter-spacing: .08em;
+    overflow-wrap: anywhere;
+}
+
+.discography-title {
+    margin: 0;
+
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 1.35;
+
+    overflow-wrap: anywhere;
+}
+
+.discography-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    gap: 8px;
+
+    margin-top: auto;
+    padding-top: 10px;
+
+    color: var(--muted);
+
+    font-size: 10px;
+    letter-spacing: .08em;
+}
+
+.discography-platform {
+    transition: color .3s ease;
+}
+
+.discography-card:hover .discography-platform {
+    color: var(--fg);
+}
+
+.discography-card:focus-visible {
+    outline: 1px solid var(--fg);
+    outline-offset: 5px;
 }
 
 /* DJ SETS */
@@ -435,7 +555,20 @@ a {
     opacity: .65;
 }
 
-/* TABLETS */
+/* TABLETS — DISCOGRAFÍA */
+
+@media (max-width: 1000px) {
+
+    .discography-gallery {
+        grid-template-columns:
+            repeat(3, minmax(0, 1fr));
+
+        column-gap: 22px;
+        row-gap: 35px;
+    }
+}
+
+/* TABLETS — REPRODUCTORES */
 
 @media (max-width: 900px) {
 
@@ -493,7 +626,6 @@ a {
         grid-template-columns: 1fr;
 
         gap: 26px;
-
         padding-top: 28px;
     }
 
@@ -515,6 +647,7 @@ a {
 
     .release-title {
         margin: 15px 0 12px;
+
         font-size: clamp(27px, 7vw, 39px);
     }
 
@@ -535,160 +668,7 @@ a {
         width: 45px;
     }
 
-    .music-gallery {
-        grid-template-columns: 1fr;
-        gap: 35px;
-    }
-
-    .copyright {
-        font-size: 8px;
-        letter-spacing: 0;
-    }
-
-    .back-link {
-        font-size: 9px;
-    }
-}
-
-@media (max-width: 370px) {
-
-    .volume-control input {
-        width: 32px;
-    }
-
-    .player-controls {
-        gap: 9px;
-    }
-}
-
-
-/* =========================================
-   CERZ — DISCOGRAFÍA
-   ========================================= */
-
-.discography-gallery {
-    display: grid;
-
-    grid-template-columns:
-        repeat(4, minmax(0, 1fr));
-
-    column-gap: 28px;
-    row-gap: 42px;
-
-    margin-top: 32px;
-}
-
-.discography-card {
-    display: flex;
-    flex-direction: column;
-
-    min-width: 0;
-}
-
-.discography-cover {
-    position: relative;
-
-    width: 100%;
-    aspect-ratio: 1 / 1;
-
-    background: #222;
-    overflow: hidden;
-}
-
-.discography-cover img {
-    display: block;
-
-    width: 100%;
-    height: 100%;
-
-    object-fit: cover;
-
-    transition:
-        transform .4s ease,
-        opacity .3s ease;
-}
-
-.discography-card:hover img {
-    transform: scale(1.035);
-    opacity: .8;
-}
-
-.discography-info {
-    display: flex;
-    flex-direction: column;
-
-    flex: 1;
-
-    gap: 8px;
-    padding: 15px 0;
-
-    border-bottom: 1px solid var(--line);
-}
-
-.discography-artist {
-    color: var(--muted);
-
-    font-size: 10px;
-    letter-spacing: .08em;
-
-    overflow-wrap: anywhere;
-}
-
-.discography-title {
-    margin: 0;
-
-    font-size: 15px;
-    font-weight: 400;
-    line-height: 1.35;
-
-    overflow-wrap: anywhere;
-}
-
-.discography-meta {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-
-    gap: 8px;
-
-    margin-top: auto;
-    padding-top: 10px;
-
-    color: var(--muted);
-
-    font-size: 10px;
-    letter-spacing: .08em;
-}
-
-.discography-platform {
-    transition: color .3s ease;
-}
-
-.discography-card:hover .discography-platform {
-    color: var(--fg);
-}
-
-.discography-card:focus-visible {
-    outline: 1px solid var(--fg);
-    outline-offset: 5px;
-}
-
-/* DISCOGRAFÍA — TABLETS */
-
-@media (max-width: 1000px) {
-
-    .discography-gallery {
-        grid-template-columns:
-            repeat(3, minmax(0, 1fr));
-
-        column-gap: 22px;
-        row-gap: 35px;
-    }
-}
-
-/* DISCOGRAFÍA — CELULARES */
-
-@media (max-width: 650px) {
+    /* DISCOGRAFÍA */
 
     .discography-gallery {
         grid-template-columns:
@@ -715,5 +695,35 @@ a {
     .discography-info {
         padding: 12px 0;
     }
+
+    /* DJ SETS */
+
+    .music-gallery {
+        grid-template-columns: 1fr;
+        gap: 35px;
+    }
+
+    .dj-section {
+        margin-bottom: 0;
+    }
+
+    .copyright {
+        font-size: 8px;
+        letter-spacing: 0;
+    }
+
+    .back-link {
+        font-size: 9px;
+    }
 }
 
+@media (max-width: 370px) {
+
+    .volume-control input {
+        width: 32px;
+    }
+
+    .player-controls {
+        gap: 9px;
+    }
+}
