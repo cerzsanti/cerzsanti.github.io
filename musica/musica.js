@@ -1,14 +1,14 @@
 
 /* =========================================
    CERZ — MÚSICA
-   Reproductores múltiples + DJ sets
    ========================================= */
 
-document.addEventListener("DOMContentLoaded", () => {
 
-    // =====================================
-    // REPRODUCTORES
-    // =====================================
+/* =========================================
+   01 — REPRODUCTORES
+   ========================================= */
+
+function iniciarReproductores() {
 
     const players =
         document.querySelectorAll(".audio-player");
@@ -65,6 +65,20 @@ document.addEventListener("DOMContentLoaded", () => {
         const status =
             player.querySelector(".audio-status");
 
+        if (
+            !audio ||
+            !playButton ||
+            !playIcon ||
+            !progress ||
+            !currentTime ||
+            !duration ||
+            !volume ||
+            !muteButton ||
+            !status
+        ) {
+            return;
+        }
+
         // PLAY / PAUSA
 
         function updatePlayButton() {
@@ -87,7 +101,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 const otherAudio =
                     otherPlayer.querySelector("audio");
 
-                if (otherAudio !== audio) {
+                if (otherAudio && otherAudio !== audio) {
                     otherAudio.pause();
                 }
 
@@ -112,6 +126,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         "NO SE PUDO REPRODUCIR EL AUDIO";
 
                     console.error(error);
+
                 }
 
             } else {
@@ -126,6 +141,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             pauseOtherPlayers();
             updatePlayButton();
+
         });
 
         audio.addEventListener(
@@ -139,6 +155,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             duration.textContent =
                 formatTime(audio.duration);
+
         }
 
         audio.addEventListener(
@@ -204,6 +221,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             muteButton.style.opacity =
                 muted ? "0.4" : "1";
+
         }
 
         volume.addEventListener("input", () => {
@@ -230,9 +248,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
         audio.addEventListener("ended", () => {
 
-            updatePlayButton();
+            audio.currentTime = 0;
 
             progress.value = 0;
+
+            currentTime.textContent = "00:00";
+
+            updatePlayButton();
 
         });
 
@@ -245,116 +267,72 @@ document.addEventListener("DOMContentLoaded", () => {
 
         });
 
+        updateDuration();
         updatePlayButton();
         updateMuteButton();
 
     });
 
-    // =====================================
-    // DJ SETS
-    // =====================================
-
-    const videos = [
-        {
-            id: "cdaPJ3ApcDE",
-            titulo: "DJ SET 01"
-        },
-        {
-            id: "7eljrhr_SO4",
-            titulo: "DJ SET 02"
-        }
-    ];
-
-    const gallery =
-        document.getElementById("music-gallery");
-
-    videos.forEach((video, index) => {
-
-        const card = document.createElement("a");
-
-        card.className = "video-card";
-
-        card.href =
-            "https://www.youtube.com/watch?v=" +
-            encodeURIComponent(video.id);
-
-        card.target = "_blank";
-        card.rel = "noopener noreferrer";
-
-        card.setAttribute(
-            "aria-label",
-            `Ver ${video.titulo} en YouTube`
-        );
-
-        // MINIATURA
-
-        const image = document.createElement("div");
-        image.className = "video-image";
-
-        const thumbnail = document.createElement("img");
-
-        thumbnail.src =
-            `https://i.ytimg.com/vi/${video.id}/hqdefault.jpg`;
-
-        thumbnail.alt = video.titulo;
-        thumbnail.loading = "lazy";
-
-        const play = document.createElement("span");
-
-        play.className = "video-play";
-        play.setAttribute("aria-hidden", "true");
-
-        image.appendChild(thumbnail);
-        image.appendChild(play);
-
-        // INFORMACIÓN
-
-        const info = document.createElement("div");
-        info.className = "video-info";
-
-        const title = document.createElement("span");
-
-        title.className = "video-title";
-        title.textContent = video.titulo;
-
-        const number = document.createElement("span");
-
-        number.className = "video-number";
-
-        number.textContent =
-            String(index + 1).padStart(2, "0");
-
-        info.appendChild(title);
-        info.appendChild(number);
-
-        card.appendChild(image);
-        card.appendChild(info);
-
-        gallery.appendChild(card);
-
-    });
-
-});
+}
 
 
 /* =========================================
-   CERZ — GENERACIÓN DE DISCOGRAFÍA
+   02 — DISCOGRAFÍA
    ========================================= */
 
-document.addEventListener("DOMContentLoaded", () => {
+function iniciarDiscografia() {
 
     const gallery =
         document.getElementById("discography-gallery");
 
-    if (!gallery || typeof discografia === "undefined") {
+    const status =
+        document.getElementById("discography-status");
+
+    if (!gallery) {
+
+        if (status) {
+            status.textContent =
+                "NO SE ENCONTRÓ EL CONTENEDOR DE DISCOGRAFÍA";
+        }
+
         return;
+
+    }
+
+    // VERIFICACIÓN DEL CATÁLOGO
+
+    if (!Array.isArray(window.discografia)) {
+
+        if (status) {
+
+            status.textContent =
+                "NO SE PUDO CARGAR EL ARCHIVO discografia.js";
+
+        }
+
+        return;
+
+    }
+
+    if (window.discografia.length === 0) {
+
+        if (status) {
+            status.textContent =
+                "EL CATÁLOGO NO CONTIENE PUBLICACIONES";
+        }
+
+        return;
+
     }
 
     // ORDEN CRONOLÓGICO
 
-    const publicaciones = [...discografia].sort(
-        (a, b) => b.anio - a.anio
-    );
+    const publicaciones =
+        [...window.discografia].sort(
+            (a, b) => b.anio - a.anio
+        );
+
+    gallery.replaceChildren();
 
     // GENERACIÓN DE FICHAS
 
@@ -365,7 +343,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 ? "SPOTIFY"
                 : "YOUTUBE";
 
-        // ENLACE PRINCIPAL
+        // ENLACE
 
         const card = document.createElement("a");
 
@@ -388,7 +366,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const image = document.createElement("img");
 
-        image.src = disco.portada
+        image.src = "./" + disco.portada
             .split("/")
             .map(encodeURIComponent)
             .join("/");
@@ -439,7 +417,7 @@ document.addEventListener("DOMContentLoaded", () => {
         meta.appendChild(year);
         meta.appendChild(platform);
 
-        // ENSAMBLAJE DE LA FICHA
+        // ENSAMBLAJE
 
         info.appendChild(artist);
         info.appendChild(title);
@@ -448,10 +426,184 @@ document.addEventListener("DOMContentLoaded", () => {
         card.appendChild(cover);
         card.appendChild(info);
 
-        // INCORPORACIÓN AL DOCUMENTO
+        gallery.appendChild(card);
+
+    });
+
+    // OCULTAR MENSAJE DE CARGA
+
+    if (status) {
+
+        status.textContent = "";
+        status.hidden = true;
+
+    }
+
+}
+
+
+/* =========================================
+   03 — DJ SETS
+   ========================================= */
+
+function iniciarDJSets() {
+
+    const videos = [
+
+        {
+            id: "cdaPJ3ApcDE",
+            titulo: "DJ SET 01"
+        },
+
+        {
+            id: "7eljrhr_SO4",
+            titulo: "DJ SET 02"
+        }
+
+    ];
+
+    const gallery =
+        document.getElementById("music-gallery");
+
+    if (!gallery) {
+        return;
+    }
+
+    gallery.replaceChildren();
+
+    videos.forEach((video, index) => {
+
+        const card = document.createElement("a");
+
+        card.className = "video-card";
+
+        card.href =
+            "https://www.youtube.com/watch?v=" +
+            encodeURIComponent(video.id);
+
+        card.target = "_blank";
+        card.rel = "noopener noreferrer";
+
+        card.setAttribute(
+            "aria-label",
+            `Ver ${video.titulo} en YouTube`
+        );
+
+        // MINIATURA
+
+        const image = document.createElement("div");
+
+        image.className = "video-image";
+
+        const thumbnail = document.createElement("img");
+
+        thumbnail.src =
+            `https://i.ytimg.com/vi/${video.id}/hqdefault.jpg`;
+
+        thumbnail.alt = video.titulo;
+        thumbnail.loading = "lazy";
+
+        const play = document.createElement("span");
+
+        play.className = "video-play";
+        play.setAttribute("aria-hidden", "true");
+
+        image.appendChild(thumbnail);
+        image.appendChild(play);
+
+        // INFORMACIÓN
+
+        const info = document.createElement("div");
+
+        info.className = "video-info";
+
+        const title = document.createElement("span");
+
+        title.className = "video-title";
+        title.textContent = video.titulo;
+
+        const number = document.createElement("span");
+
+        number.className = "video-number";
+
+        number.textContent =
+            String(index + 1).padStart(2, "0");
+
+        info.appendChild(title);
+        info.appendChild(number);
+
+        card.appendChild(image);
+        card.appendChild(info);
 
         gallery.appendChild(card);
 
     });
+
+}
+
+
+/* =========================================
+   INICIALIZACIÓN GENERAL
+   ========================================= */
+
+document.addEventListener("DOMContentLoaded", () => {
+
+    // REPRODUCTORES
+
+    try {
+
+        iniciarReproductores();
+
+    } catch (error) {
+
+        console.error(
+            "Error en reproductores:",
+            error
+        );
+
+    }
+
+    // DISCOGRAFÍA
+
+    try {
+
+        iniciarDiscografia();
+
+    } catch (error) {
+
+        const status =
+            document.getElementById("discography-status");
+
+        if (status) {
+
+            status.hidden = false;
+
+            status.textContent =
+                "ERROR AL GENERAR LA DISCOGRAFÍA: " +
+                error.message;
+
+        }
+
+        console.error(
+            "Error en discografía:",
+            error
+        );
+
+    }
+
+    // DJ SETS
+
+    try {
+
+        iniciarDJSets();
+
+    } catch (error) {
+
+        console.error(
+            "Error en DJ sets:",
+            error
+        );
+
+    }
 
 });
