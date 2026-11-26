@@ -335,3 +335,123 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
 });
+
+
+/* =========================================
+   CERZ — GENERACIÓN DE DISCOGRAFÍA
+   ========================================= */
+
+document.addEventListener("DOMContentLoaded", () => {
+
+    const gallery =
+        document.getElementById("discography-gallery");
+
+    if (!gallery || typeof discografia === "undefined") {
+        return;
+    }
+
+    // ORDEN CRONOLÓGICO
+
+    const publicaciones = [...discografia].sort(
+        (a, b) => b.anio - a.anio
+    );
+
+    // GENERACIÓN DE FICHAS
+
+    publicaciones.forEach(disco => {
+
+        const plataforma =
+            disco.enlace.includes("spotify.com")
+                ? "SPOTIFY"
+                : "YOUTUBE";
+
+        // ENLACE PRINCIPAL
+
+        const card = document.createElement("a");
+
+        card.className = "discography-card";
+
+        card.href = disco.enlace;
+        card.target = "_blank";
+        card.rel = "noopener noreferrer";
+
+        card.setAttribute(
+            "aria-label",
+            `Escuchar ${disco.titulo} de ${disco.artista} en ${plataforma}`
+        );
+
+        // PORTADA
+
+        const cover = document.createElement("div");
+
+        cover.className = "discography-cover";
+
+        const image = document.createElement("img");
+
+        image.src = disco.portada
+            .split("/")
+            .map(encodeURIComponent)
+            .join("/");
+
+        image.alt =
+            `${disco.artista} — ${disco.titulo}`;
+
+        image.loading = "lazy";
+
+        cover.appendChild(image);
+
+        // INFORMACIÓN
+
+        const info = document.createElement("div");
+
+        info.className = "discography-info";
+
+        // ARTISTA
+
+        const artist = document.createElement("span");
+
+        artist.className = "discography-artist";
+        artist.textContent = disco.artista;
+
+        // TÍTULO
+
+        const title = document.createElement("h3");
+
+        title.className = "discography-title";
+        title.textContent = disco.titulo;
+
+        // METADATOS
+
+        const meta = document.createElement("div");
+
+        meta.className = "discography-meta";
+
+        const year = document.createElement("span");
+
+        year.textContent = disco.anio;
+
+        const platform = document.createElement("span");
+
+        platform.className = "discography-platform";
+
+        platform.textContent = plataforma + " ↗";
+
+        meta.appendChild(year);
+        meta.appendChild(platform);
+
+        // ENSAMBLAJE DE LA FICHA
+
+        info.appendChild(artist);
+        info.appendChild(title);
+        info.appendChild(meta);
+
+        card.appendChild(cover);
+        card.appendChild(info);
+
+        // INCORPORACIÓN AL DOCUMENTO
+
+        gallery.appendChild(card);
+
+    });
+
+});
