@@ -560,3 +560,160 @@ a {
         gap: 9px;
     }
 }
+
+
+/* =========================================
+   CERZ — DISCOGRAFÍA
+   ========================================= */
+
+.discography-gallery {
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, minmax(0, 1fr));
+
+    column-gap: 28px;
+    row-gap: 42px;
+
+    margin-top: 32px;
+}
+
+.discography-card {
+    display: flex;
+    flex-direction: column;
+
+    min-width: 0;
+}
+
+.discography-cover {
+    position: relative;
+
+    width: 100%;
+    aspect-ratio: 1 / 1;
+
+    background: #222;
+    overflow: hidden;
+}
+
+.discography-cover img {
+    display: block;
+
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+
+    transition:
+        transform .4s ease,
+        opacity .3s ease;
+}
+
+.discography-card:hover img {
+    transform: scale(1.035);
+    opacity: .8;
+}
+
+.discography-info {
+    display: flex;
+    flex-direction: column;
+
+    flex: 1;
+
+    gap: 8px;
+    padding: 15px 0;
+
+    border-bottom: 1px solid var(--line);
+}
+
+.discography-artist {
+    color: var(--muted);
+
+    font-size: 10px;
+    letter-spacing: .08em;
+
+    overflow-wrap: anywhere;
+}
+
+.discography-title {
+    margin: 0;
+
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 1.35;
+
+    overflow-wrap: anywhere;
+}
+
+.discography-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    gap: 8px;
+
+    margin-top: auto;
+    padding-top: 10px;
+
+    color: var(--muted);
+
+    font-size: 10px;
+    letter-spacing: .08em;
+}
+
+.discography-platform {
+    transition: color .3s ease;
+}
+
+.discography-card:hover .discography-platform {
+    color: var(--fg);
+}
+
+.discography-card:focus-visible {
+    outline: 1px solid var(--fg);
+    outline-offset: 5px;
+}
+
+/* DISCOGRAFÍA — TABLETS */
+
+@media (max-width: 1000px) {
+
+    .discography-gallery {
+        grid-template-columns:
+            repeat(3, minmax(0, 1fr));
+
+        column-gap: 22px;
+        row-gap: 35px;
+    }
+}
+
+/* DISCOGRAFÍA — CELULARES */
+
+@media (max-width: 650px) {
+
+    .discography-gallery {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+
+        column-gap: 16px;
+        row-gap: 30px;
+
+        margin-top: 24px;
+    }
+
+    .discography-title {
+        font-size: 13px;
+    }
+
+    .discography-artist {
+        font-size: 9px;
+    }
+
+    .discography-meta {
+        font-size: 9px;
+    }
+
+    .discography-info {
+        padding: 12px 0;
+    }
+}
+
